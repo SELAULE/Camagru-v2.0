@@ -12,12 +12,11 @@ var expressValidator = require('express-validator');
 var flash = require('flash');
 var session = require('express-session');
 var passport = require('passport');
-var LocalStrategy = require('passport-local');
-var LocalStrategy = require('Strategy');
+var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost//camagru');
-var db = mongoose.connection();
+mongoose.connect('mongodb://localhost:27017/camagru-v2');
+var db = mongoose.connection;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -26,11 +25,13 @@ var users = require('./routes/users');
 const app = express();
 
 // Setup a view Engine
-app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.engine('handlebars', exphbs({defaultLayout: 'layout'}));
+app.set('view engine', 'handlebars');
 
 //Body Parser Middleware
 app.use(bodyParser.json());
-app.engine(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 
 // Set static Folder
@@ -73,6 +74,7 @@ app.use(function(req, res, next) {
     res.locals.success_msg = req.flash('success_msg');
     res.locals.error_msg = req.flash('error_msg');
     res.locals.error = req.flash('error');
+    res.locals.user = req.user || null;
     next();
 });
 
