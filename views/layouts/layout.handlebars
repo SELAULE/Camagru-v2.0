@@ -29,10 +29,13 @@
 	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 		 <a class="navbar-brand" href="/">Camagru</a>
      {{#if user}}
+	 Welcome + user.name
       <a class="btn btn-outline-success my-2 my-sm-0" href="/users/logout">Sign out</a>
      {{else}}
       <a class="btn btn-outline-success my-2 my-sm-0" href="/users/login">Sign in</a>
       <a class="btn btn-outline-success my-2 my-sm-0" href="/users/register">Sign up</a>
+      {{!-- <a class="google-btn" href="/auth/google">Google+</a> --}}
+	    <div id="my-signin2"></div>
     {{/if}}
 	</nav>
 
@@ -55,6 +58,7 @@
 		{{/if}} --}}
 
         {{{body}}}
+		  <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
       </div>
     </div>
     <hr>

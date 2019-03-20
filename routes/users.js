@@ -1,8 +1,8 @@
-var express = require('express');
-var router = express.Router();
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var User = require('../models/user');
+const express = require('express');
+const router = express.Router();
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const User = require('../models/user');
 
 // Register
 
@@ -19,11 +19,11 @@ router.get('/login', (req, res) => {
 // Register User
 
 router.post('/register', (req, res) => {
-    var name = req.body.name;
-    var username = req.body.username;
-    var email = req.body.email;
-    var password = req.body.password;
-    var password2 = req.body.password2;
+    let name = req.body.name;
+    let username = req.body.username;
+    let email = req.body.email;
+    let password = req.body.password;
+    let password2 = req.body.password2;
     
     req.checkBody('email', 'Email is required').notEmpty();
     req.checkBody('email', 'Email not valid').isEmail();
@@ -61,7 +61,6 @@ passport.use(new LocalStrategy(
         if (!user) {
             return done(null, false, {message: 'Unknown user'});
         }
-
         User.comparePassword(password, user.password, function (err, isMatch) {
             if (err) throw err;
             if (isMatch) {
@@ -94,5 +93,6 @@ router.get('/logout', function (req, res) {
     req.logout();
 
     res.redirect('/users/Login');
-})
+});
+
 module.exports = router;

@@ -1,25 +1,33 @@
 // const express = require('express');
-// const authRouter = require('./routes/auth-routes');
-// const passport = require('./config/passport-setup');
+const authRouter = require('./routes/auth-routes');
+const passport = require('./config/passport-setup');
+const keys = require('./config/keys');
 
 
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var exphbs = require('express-handlebars');
-var expressValidator = require('express-validator');
-var flash = require('flash');
-var session = require('express-session');
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var mongo = require('mongodb');
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/camagru-v2');
-var db = mongoose.connection;
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
+const bodyParser = require('body-parser');
+const exphbs = require('express-handlebars');
+const expressValidator = require('express-validator');
+const flash = require('flash');
+const session = require('express-session');
+const passportOauth = require('passport');
+// var passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const mongo = require('mongodb');
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/camagru-v2', { useNewUrlParser: true })
+    .then(() => console.log('Mongodb Connected'))
+    .catch( err => console.log(err));
+// // mongoose.connect('keys.mongodb.DBuri', () => {
+//     console.log('conneted to mongo');
+// });
+const db = mongoose.connection;
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+const routes = require('./routes/index');
+const users = require('./routes/users');
 
 // Init App
 const app = express();
@@ -30,23 +38,30 @@ app.engine('handlebars', exphbs({defaultLayout: 'layout'}));
 app.set('view engine', 'handlebars');
 
 //Body Parser Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(cookieParser());
+// app.use(bodyParser.json());
+app.use(express.urlencoded({extended: false}));
+// app.use(cookieParser());
 
 // Set static Folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-//Setup Express Session
+// Setup Express Session
 app.use(session({
     secret: 'secret',
     saveUninitialized: true,
     resave: true
 }));
 
+// init Cookie Session
+
+// app.use(cookieSession({
+//     maxAge: 24 * 60 * 60 * 1000,
+//     keys: [keys.Session.cookieKey]
+// }));
+
 // Passport init 
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(passportOauth.initialize());
+app.use(passportOauth.session());
 
 //Express Validator
 app.use(expressValidator ({
@@ -58,7 +73,7 @@ app.use(expressValidator ({
         while (namespace.length) {
             formParam += '[' + namespace.shift() + ']';
         }
-            return {
+        return {
             param: formParam,
             msg: msg,
             value:  value,
@@ -81,7 +96,7 @@ app.use(function(req, res, next) {
 app.use('/', routes);
 app.use('/users', users);
 
-// app.use('/auth', authRouter);
+app.use('/auth', authRouter);
 
 // // Route to home
 // app.get( '/', (req, res) => {
