@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/user');
+// const flash = require('connect-flash');
 
 // Register
 
@@ -45,7 +46,7 @@ router.post('/register', (req, res) => {
             email: email,
             password: password
         });
-        User.createUser( newUser, function (err, user) {
+        User.createUser( newUser, (err, user) => {
             if (err) throw err;
             console.log(user);
         });
@@ -56,12 +57,12 @@ router.post('/register', (req, res) => {
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
-    User.getUserByUsername(username, function (err, user) {
-        if (err) throw err;
+    User.getUserByUsername(username, (err, user) => {
+        if (err) throw  err;
         if (!user) {
             return done(null, false, {message: 'Unknown user'});
         }
-        User.comparePassword(password, user.password, function (err, isMatch) {
+        User.comparePassword(password, user.password, (err, isMatch) => {
             if (err) throw err;
             if (isMatch) {
                 return done(null, user);
@@ -73,25 +74,26 @@ passport.use(new LocalStrategy(
   }
 ));
 
-passport.serializeUser(function(user, done) {
+passport.serializeUser( (user, done) => {
   done(null, user.id);
 });
 
-passport.deserializeUser(function(id, done) {
-  User.getUserById(id, function(err, user) {
+passport.deserializeUser((id, done) => {
+  User.getUserById(id, (err, user) => {
     done(err, user);
   });
 });
 
-router.post('/login',
-  passport.authenticate('local', {successRedirect: '/', failureRedirect: '/users/login', failureFlash: true}),
-  function(req, res) {
-    res.redirect('/');
+router.post('/login', (req, res, next) => {
+    passport.authenticate('local', {
+        successRedirect: '/',
+        failureRedirect: '/users/ login',
+        failureFlash: true
+    }) (req, res, next);
   });
 
-router.get('/logout', function (req, res) {
+router.get('/logout', (req, res) => {
     req.logout();
-
     res.redirect('/users/Login');
 });
 

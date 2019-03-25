@@ -21,7 +21,8 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/camagru-v2', { useNewUrlParser: true })
     .then(() => console.log('Mongodb Connected'))
     .catch( err => console.log(err));
-// // mongoose.connect('keys.mongodb.DBuri', () => {
+
+//  mongoose.connect(keys.mongodb.DBuri, {useNewUrlParser: true},  () => {
 //     console.log('conneted to mongo');
 // });
 const db = mongoose.connection;
@@ -47,7 +48,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Setup Express Session
 app.use(session({
-    secret: 'secret',
+    secret: 'Camagru-v2',
     saveUninitialized: true,
     resave: true
 }));
@@ -59,7 +60,7 @@ app.use(session({
 //     keys: [keys.Session.cookieKey]
 // }));
 
-// Passport init 
+// Passport Middleware
 app.use(passportOauth.initialize());
 app.use(passportOauth.session());
 
@@ -85,12 +86,13 @@ app.use(expressValidator ({
 app.use(flash());
 
 //  Global Vars
-app.use(function(req, res, next) {
+app.use( (req, res, next) => {
     res.locals.success_msg = req.flash('success_msg');
     res.locals.error_msg = req.flash('error_msg');
-    res.locals.error = req.flash('error');
-    res.locals.user = req.user || null;
     next();
+    // res.locals.error = req.flash('error');
+    // res.locals.user = req.user || null;
+    // next();
 });
 
 app.use('/', routes);

@@ -1,19 +1,22 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const {ensureAuthinticated} =  require('../config/auth');
 
 // Home page
-
-router.get('/', ensureAuthinticated, (req, res) => {
+router.get('/', (req, res) => {
     res.render('index');
 });
 
-function ensureAuthinticated(req, res, next) {
-	if (req.isAuthenticated) {
-		return next();
-	} else {
-		// req.flash('')
-		res.redirect('/users/login');
-	}
-}
+// Dashboard Page
+router.get('/dashboard', ensureAuthinticated, (req, res) => {
+	res.render('dashboard');
+	// name: req.user.name
+});
+
+// cam
+router.get('/cam', ensureAuthinticated, (req, res) => {
+	res.render('cam');
+	// name: req.user.name
+});
 
 module.exports = router;
