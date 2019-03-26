@@ -6,9 +6,9 @@
 	<title>New Pic</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" /> -->
-	<link rel="stylesheet" type="text/css" media="screen" href="css/pic.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="/css/pic.css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	{{!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> --}}
 	<link>
 <style>
 	.com-box{
@@ -34,11 +34,18 @@
         text-decoration: none !important;
     }
 </style>
-	<script src="js/pic.js"></script>
-	<script src="js/sidebar.js"></script>
+	<script src="/js/pic.js"></script>
 </head>
 <body>
-	
+	<div class="emo_list">
+			<img id="e1" class="emojie" src="img/Face_With_Rolling_Eyes_Emoji_large.png" height='50px' width='50px' style="margin: 17px">
+			<img id="e2" class="emojie" src="img/Fist_Hand_Emoji.png" height='50px' width='50px' style="margin: 17px">
+			<img id="e3" class="emojie" src="img/Ghost_Emoji_large.png" height='50px' width='50px' style="margin: 17px">
+			<img id="e4" class="emojie" src="img/Poop_Emoji_7b204f05-eec6-4496-91b1-351acc03d2c7_large.png" height='50px' width='50px' style="margin: 17px">
+			<img id="e5" class="emojie" src="img/Very_Mad_Emoji_large.png" height='50px' width='50px' style="margin: 17px">
+			<img id="e6" class="emojie" src="img/smile.png" height='50px' width='50px' style="margin: 17px">
+			<br>
+		</div>
 	<div class="main_container">
 		<div class="top_container">
 			<div id="overlay" class="overlay">
@@ -49,15 +56,7 @@
 				<video id='video'>Stream not available...</video>
 				<img id="image_upload" height="375" width="500" class="image" name="image" style="display: none"></img>
 			</div>
-			<div class="emo_list">
-			<img id="e1" src="img/Face_With_Rolling_Eyes_Emoji_large.png" height='50px' width='50px' style="margin: 17px">
-			<img id="e2" src="img/Fist_Hand_Emoji.png" height='50px' width='50px' style="margin: 17px">
-			<img id="e3" src="img/Ghost_Emoji_large.png" height='50px' width='50px' style="margin: 17px">
-			<img id="e4" src="img/Poop_Emoji_7b204f05-eec6-4496-91b1-351acc03d2c7_large.png" height='50px' width='50px' style="margin: 17px">
-			<img id="e5" src="img/Very_Mad_Emoji_large.png" height='50px' width='50px' style="margin: 17px">
-			<img id="e6" src="img/smile.png" height='50px' width='50px' style="margin: 17px">
-			<br>
-		</div>
+			
 			<button id="photo_button" class="button">Take Photo</button>
 			<canvas id="canvas2"></canvas>
 			<!-- <form action="cam/upload.php" method="post" enctype="multipart/form-data"> -->
@@ -89,13 +88,7 @@
 </body>
 
 <script>
-	function likes(x) {
-	var	likes = 1;
-		x.classList.toggle("fa-thumbs-down");
-		document.getElementById('show').innerHTML=likes;
-		likes = likes + 1;
-		document.getElementById('show').submit();
-	}
+
 	function off() {
 		document.getElementById("emoji1").style.visibility = "hidden";
 		document.getElementById("emoji1").removeAttribute('src');
@@ -111,12 +104,12 @@
 	emo5 = document.getElementById("e5");
 	emo6 = document.getElementById("e6");
 	
-	emo1.addEventListener("click", function(){switchsrc(emo1);}, false);
-	emo2.addEventListener("click", function(){switchsrc(emo2);}, false);
-	emo3.addEventListener("click", function(){switchsrc(emo3);}, false);
-	emo4.addEventListener("click", function(){switchsrc(emo4);}, false);
-	emo5.addEventListener("click", function(){switchsrc(emo5);}, false);
-	emo6.addEventListener("click", function(){switchsrc(emo6);}, false);
+	emo1.addEventListener("click", () => {switchsrc(emo1);}, false);
+	emo2.addEventListener("click", () => {switchsrc(emo2);}, false);
+	emo3.addEventListener("click", () => {switchsrc(emo3);}, false);
+	emo4.addEventListener("click", () => {switchsrc(emo4);}, false);
+	emo5.addEventListener("click", () => {switchsrc(emo5);}, false);
+	emo6.addEventListener("click", () => {switchsrc(emo6);}, false);
 	function switchsrc(emonew)
 	{
 		// var canvas = document.getElementById('canvas'),
