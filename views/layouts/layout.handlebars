@@ -22,6 +22,16 @@
           font-size: 3.5rem;
         }
       }
+	  #welcome_msg {
+		  color: #fff;
+		  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+		  font-weight: bold;
+		  padding-top: 5px; 
+	  }
+	  #signout {
+		  float: right !important;
+		  
+	  }
     </style>
     </head>
 <body>
@@ -29,8 +39,8 @@
 	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 		 <a class="navbar-brand" href="/">Camagru</a>
      {{#if user}}
-	 Welcome + user.name
-      <a class="btn btn-outline-success my-2 my-sm-0" href="/users/logout">Sign out</a>
+	 <p id="welcome_msg">Welcome {{user.name}} </p>
+      <a id="signout" class="btn btn-outline-success my-2 my-sm-0" href="/users/logout">Sign out</a>
      {{else}}
       <a class="btn btn-outline-success my-2 my-sm-0" href="/users/login">Sign in</a>
       <a class="btn btn-outline-success my-2 my-sm-0" href="/users/register">Sign up</a>
