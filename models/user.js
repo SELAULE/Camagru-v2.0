@@ -2,22 +2,52 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 // User Schema
-var UserSchema = mongoose.Schema({
+const UserSchema = mongoose.Schema({
     username: {
         type: String,
+        require: true,
         index: true
     },
     name: {
-        type: String
+        type: String,
+        require: true
     },
     password: {
-        type: String
+        type: String,
+        require: true
     },
+    passwordResetToken: String,
+
+    passwordResetTokenDate: Date,
+
     email: {
-        type: String
+        type: String,
+        require: true
     },
     googleid: {
-        type: String
+        type: String,
+    },
+    active: {
+        type: Boolean,
+        default: false
+    }
+});
+
+const tokenSchema = new mongoose.Schema({
+    _userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
+    },
+    token: {
+        type: String,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        required: true,
+        default: Date.now,
+        expires: 43200
     }
 });
 
@@ -26,14 +56,15 @@ var UserSchema = mongoose.Schema({
 // Creating the user
 
 const User = module.exports = mongoose.model('User', UserSchema);
-module.exports.createUser = (newUser, callback) => {
-    bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
-            newUser.password = hash;
-            newUser.save(callback);
-        });
-    });
-}
+const token = module.exports = mongoose.model('token', tokenSchema);
+// module.exports.createUser = (newUser, callback) => {
+//     bcrypt.genSalt(10, (err, salt) => {
+//         bcrypt.hash(newUser.password, salt, (err, hash) => {
+//             newUser.password = hash;
+//             newUser.save(callback);
+//         });
+//     });
+// }
 
 // Retrieving the user by username
 module.exports.getUserByUsername = (username, callback) => {

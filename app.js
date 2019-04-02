@@ -1,4 +1,3 @@
-// const express = require('express');
 const authRouter = require('./routes/auth-routes');
 const passport = require('./config/passport-setup');
 const keys = require('./config/keys');
@@ -15,15 +14,17 @@ const passportOauth = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const mongo = require('mongodb');
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/camagru-v2', { useNewUrlParser: true })
-    .then(() => console.log('Mongodb Connected'))
-    .catch( err => console.log(err));
+// mongoose.connect('mongodb://localhost:27017/camagru-v2', { useNewUrlParser: true })
+//     .then(() => console.log('Mongodb Connected'))
+//     .catch( err => console.log(err));
 
+
+ mongoose.connect(keys.mongodb.DBuri, {useNewUrlParser: true},  () => {
+    console.log('conneted to mongo');
+    // console.log(keys.mongodb.DBuri);
+});
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
-//  mongoose.connect(keys.mongodb.DBuri, {useNewUrlParser: true},  () => {
-//     console.log('conneted to mongo');
-// });
 const db = mongoose.connection;
 
 const routes = require('./routes/index');

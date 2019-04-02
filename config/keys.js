@@ -6,7 +6,8 @@ module.exports = {
         clientSecret: 'AJhZgWpWv-Fab6m180qwrLrG'
     },
     mongodb: {
-        DBuri: 'mongodb+srv://ntsako:i7u2MEvnlMTGASQG@todo-list-soqiz.mongodb.net/test?retryWrites=true'
+        // DBuri: 'mongodb+srv://ntsako:root101@cluster0-ta3xh.mongodb.net/test?retryWrites=true',
+        DBuri: 'mongodb+srv://nselaule:root101@camagru-uikws.mongodb.net/test?retryWrites=true'
     },
     Session: {
         cookieKey: ['Ntsakoisanawsomecoderguys']
