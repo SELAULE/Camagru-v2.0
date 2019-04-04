@@ -46,6 +46,7 @@ body{
 	z-index: 5;
 }
 .main_container {
+	display: -ms-grid;
 	margin: auto;
 	width: 60%;
 	padding: 10px;
@@ -54,4 +55,20 @@ body{
 	margin: auto;
 	width: 60%;
 	padding: 10px;
+}
+
+#photo_button, #save_photo, #fileToUpload {
+	border: 2px solid black;
+	width: 3em;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.emo_list, {
+	border: 2px solid black;
+	vertical-align: -webkit-baseline-middle;
+}
+
+.emojie {
+	vertical-align: -webkit-baseline-middle;
+	margin: 0 auto;
 }

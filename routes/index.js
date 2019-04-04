@@ -10,14 +10,14 @@ router.get('/', (req, res) => {
 // Dashboard Page
 router.get('/dashboard', ensureAuthinticated, (req, res) =>
 	res.render('dashboard' , { 
-		name: req.user.name
+		// name: req.user.name
 	 })
 );
 
 // cam
 router.get('/cam', ensureAuthinticated, (req, res) => 
 	res.render('cam', {
-		name: req.user.name
+		// name: req.user.name
 	})
 	// name: req.user.name
 );

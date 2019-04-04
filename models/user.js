@@ -16,9 +16,9 @@ const UserSchema = mongoose.Schema({
         type: String,
         require: true
     },
-    passwordResetToken: String,
+    // passwordResetToken: String,
 
-    passwordResetTokenDate: Date,
+    // passwordResetTokenDate: Date,
 
     email: {
         type: String,
@@ -32,31 +32,31 @@ const UserSchema = mongoose.Schema({
         default: false
     }
 });
+const User = module.exports = mongoose.model('User', UserSchema);
 
-const tokenSchema = new mongoose.Schema({
-    _userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'User'
-    },
-    token: {
-        type: String,
-        required: true
-    },
-    createdAt: {
-        type: Date,
-        required: true,
-        default: Date.now,
-        expires: 43200
-    }
-});
+// const tokenSchema = new mongoose.Schema({
+//     _userId: {
+//         type: mongoose.Schema.Types.ObjectId,
+//         required: true,
+//         ref: 'User'
+//     },
+//     token: {
+//         type: String,
+//         // required: [true,"there is no token here"]
+//     },
+//     createdAt: {
+//         type: Date,
+//         required: true,
+//         default: Date.now,
+//         expires: 43200
+//     }
+// });
+// const Token = module.exports = mongoose.model('Token', tokenSchema);
 
-// const User = module.exports = mongoose.model('User', UserSchema);
 
 // Creating the user
 
-const User = module.exports = mongoose.model('User', UserSchema);
-const token = module.exports = mongoose.model('token', tokenSchema);
+// const User = module.exports = mongoose.model('User', UserSchema);
 // module.exports.createUser = (newUser, callback) => {
 //     bcrypt.genSalt(10, (err, salt) => {
 //         bcrypt.hash(newUser.password, salt, (err, hash) => {

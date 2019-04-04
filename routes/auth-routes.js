@@ -16,8 +16,10 @@ router.get('/google', passport.authenticate('google', {
     scope: ['profile']
 }));
 
-router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-    res.send('You insigned In');
+router.get('/google/redirect', 
+passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
+    // console.log(res); 
+    res.render('dashboard');
 });
 
 module.exports = router;

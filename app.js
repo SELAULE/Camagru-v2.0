@@ -14,6 +14,7 @@ const passportOauth = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const mongo = require('mongodb');
 const mongoose = require('mongoose');
+require('./config/passport-setup')(passportOauth);
 // mongoose.connect('mongodb://localhost:27017/camagru-v2', { useNewUrlParser: true })
 //     .then(() => console.log('Mongodb Connected'))
 //     .catch( err => console.log(err));
@@ -47,18 +48,18 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Setup Express Session
-app.use(session({
-    secret: 'Camagru-v2',
-    saveUninitialized: true,
-    resave: true
-}));
+// app.use(session({
+//     secret: 'Camagru-v2',
+//     saveUninitialized: true,
+//     resave: true
+// }));
 
 // init Cookie Session
 
-// app.use(cookieSession({
-//     maxAge: 24 * 60 * 60 * 1000,
-//     keys: [keys.Session.cookieKey]
-// }));
+app.use(cookieSession({
+    maxAge: 24 * 60 * 60 * 1000,
+    keys: [keys.Session.cookieKey]
+}));
 
 // Passport Middleware
 app.use(passportOauth.initialize());

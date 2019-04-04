@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
      <style>
@@ -44,8 +46,7 @@
      {{else}}
       <a class="btn btn-outline-success my-2 my-sm-0" href="/users/login">Sign in</a>
       <a class="btn btn-outline-success my-2 my-sm-0" href="/users/register">Sign up</a>
-      {{!-- <a class="google-btn" href="/auth/google">Google+</a> --}}
-	    <div id="my-signin2"></div>
+      <a class="btn btn-outline-success my-2 my-sm-0" href="/auth/google"><i class="fab fa-google-plus-g"></i>Google</a>
     {{/if}}
 	</nav>
 
@@ -55,7 +56,9 @@
     <div class="row">
       <div class="col-md-6">
         <h2>Camagru-v2</h2>
-		{{!-- {{#if success_msg}}
+        {{{body}}}
+{{!-- 
+		{{#if success_msg}}
 				<div class="alert alert-success"> {{success_msg}} </div>
 		{{/if}}
         
@@ -67,7 +70,6 @@
 			<div class="alert alert-danger"> {{error}} </div>
 		{{/if}} --}}
 
-        {{{body}}}
 		  <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
       </div>
     </div>
