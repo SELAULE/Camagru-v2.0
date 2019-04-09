@@ -19,18 +19,19 @@ passport.use(
         callbackURL: '/auth/google/redirect',
         clientID: keys.google.clientID,
         clientSecret: keys.google.clientSecret
-    }, (accessToken, refreshToken, profile, done) => {
+    }, (accessToken, refreshToken, profile, email, done) => {
         //  Check if the user exists
-
-        User.findOne({googleid: profile.id}).then((currentUser) => {
+        // console.log(email);
+        User.findOne({googleid: email.id}).then((currentUser) => {
             if (currentUser) {
                 console.log('We the user' + currentUser);
                 done (null, currentUser);
             } else {
                 const newUser = new User ({
-                    username: profile.displayName,
-                    googleid: profile.id,
-                    name: profile.name.givenName
+                    username: email.displayName,
+                    googleid: email.id,
+                    name: email.name.givenName,
+                    email: email.emails[0].value
                     // email: 
                 }).save().then((newUser) => {
                     console.log('User saved' + newUser);

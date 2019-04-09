@@ -35,7 +35,7 @@ const UserSchema = mongoose.Schema({
 const User = module.exports = mongoose.model('User', UserSchema);
 
 // const tokenSchema = new mongoose.Schema({
-//     _userId: {
+//     userId: {
 //         type: mongoose.Schema.Types.ObjectId,
 //         required: true,
 //         ref: 'User'
@@ -67,16 +67,16 @@ const User = module.exports = mongoose.model('User', UserSchema);
 // }
 
 // Retrieving the user by username
-module.exports.getUserByUsername = (username, callback) => {
-    var query = {username: username};
-    User.findOne(query, callback);
-}
+// module.exports.getUserByUsername = (username, callback) => {
+//     var query = {username: username};
+//     User.findOne(query, callback);
+// }
 
 // Retrieving the user by Id
 
-module.exports.getUserById = (id, callback) => {
-    User.findById(id, callback);
-}
+// module.exports.getUserById = (id, callback) => {
+//     User.findById(id, callback);
+// }
 
 // Checking Passwords
 

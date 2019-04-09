@@ -3,10 +3,10 @@ const router = express.Router();
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/user');
-// const token = require('../models/user').Token;
+const token = require('../models/user');
 // console.log("an annoying toke n\n!!!!!!!!!!!!!!!!!!!!!!!!!!" + User);
 const bcrypt = require('bcryptjs');
-// const crypto = require('crypto');
+const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 
 // Register
@@ -78,7 +78,7 @@ router.post('/register', (req, res) => {
                         // Saving the user
                         newUser.save()
                         .then(user => {
-                        //     console.log("my badd::::\n" + user._id);
+                            console.log(user);
                         //     let token = new Token({
                         //         _userId: user._id,
                         //         token: crypto.randomByte(16).toString('hex')
@@ -101,9 +101,6 @@ router.post('/register', (req, res) => {
                         })
                         .catch(err => console.log(err));
                     }));
-
-                    
-                //  res.send('passed');
              }
          })
          
@@ -131,40 +128,6 @@ router.post('/register', (req, res) => {
    
 });
 
-// passport.use(new LocalStrategy( { usernameField: 'username' },
-//   (username, password, done) => {
-//     //   Match the username
-//     User.findOne({ username: username })
-//         .then(user => {
-//             if (!user) {
-//                 return done(null, false, {message: 'That username is not registered you can have it if want'})
-//             }
-
-//             // Match Password
-//             bcrypt.compare(password, user.password, (err, isMatch) => {
-//                 if (err) throw err;
-
-//                 if (isMatch) {
-//                     return done(null, user);
-//                 } else {
-//                     return done(null, false, {message: 'Password is incorrect at least I told you'});
-//                 }
-//             });
-//         })
-//         .catch( err => console.log(err));
-//     })
-// )
-
-
-// passport.serializeUser( (user, done) => {
-//   done(null, user.id);
-// });
-
-// passport.deserializeUser((id, done) => {
-//   User.getUserById(id, (err, user) => {
-//     done(err, user);
-//   });
-// });
 
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {

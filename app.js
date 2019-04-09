@@ -48,18 +48,18 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Setup Express Session
-// app.use(session({
-//     secret: 'Camagru-v2',
-//     saveUninitialized: true,
-//     resave: true
-// }));
+app.use(session({
+    secret: 'Camagru-v2',
+    saveUninitialized: true,
+    resave: true
+}));
 
 // init Cookie Session
 
-app.use(cookieSession({
-    maxAge: 24 * 60 * 60 * 1000,
-    keys: [keys.Session.cookieKey]
-}));
+// app.use(cookieSession({
+//     maxAge: 24 * 60 * 60 * 1000,
+//     keys: [keys.Session.cookieKey]
+// }));
 
 // Passport Middleware
 app.use(passportOauth.initialize());
