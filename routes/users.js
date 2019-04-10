@@ -8,6 +8,7 @@ const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const mail = require('../config/auth').mail
+const { ensureAuthinticated } = require('../config/auth');
 
 // Register
 
@@ -98,17 +99,6 @@ router.post('/register', (req, res) => {
     //     token.save((err) => {
     //         if (err) throw err;
     //     });
-        
-    //     // Sending the mail
-    //     console.log("this is token obj at 98::\n" + typeof(token));
-        
-    // let transporter = nodemailer.createTransport({ service: 'Sendgrid', auth: { user: process.env.SENDGRID_USERNAME, pass: process.env.SENDGRID_PASSWORD } });
-    // let mailOptions = { from: 'no-reply@yourwebapplication.com', to: user.email, subject: 'Account Verification Token', text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n' };
-    // transporter.sendMail(mailOptions, function (err) {
-    //     if (err) { return res.status(500).send({ msg: err.message }); }
-    //     res.status(200).send('A verification email has been sent to ' + user.email + '.');
-    // });
-   
 });
 
 
@@ -119,6 +109,7 @@ router.post('/login', (req, res, next) => {
         failureFlash: true
     }) (req, res, next);
   });
+
 
 router.get('/logout', (req, res) => {
     req.logout();
