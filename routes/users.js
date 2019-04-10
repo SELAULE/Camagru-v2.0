@@ -4,10 +4,10 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/user');
 const token = require('../models/user');
-// console.log("an annoying toke n\n!!!!!!!!!!!!!!!!!!!!!!!!!!" + User);
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
+const mail = require('../config/auth').mail
 
 // Register
 
@@ -79,24 +79,7 @@ router.post('/register', (req, res) => {
                         newUser.save()
                         .then(user => {
                             console.log(user);
-                        //     let token = new Token({
-                        //         _userId: user._id,
-                        //         token: crypto.randomByte(16).toString('hex')
-                        //        });
-                        //        //  Saving the token
-                        //        token.save((err) => {
-                        //            if (err) throw err;
-                        //        });
-                               
-                        //        // Sending the mail
-                        //        console.log("this is token obj at 98::\n" + typeof(token));
-                               
-                        //    let transporter = nodemailer.createTransport({ service: 'Sendgrid', auth: { user: process.env.SENDGRID_USERNAME, pass: process.env.SENDGRID_PASSWORD } });
-                        //    let mailOptions = { from: 'no-reply@yourwebapplication.com', to: user.email, subject: 'Account Verification Token', text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n' };
-                        //    transporter.sendMail(mailOptions, function (err) {
-                        //        if (err) { return res.status(500).send({ msg: err.message }); }
-                        //        res.status(200).send('A verification email has been sent to ' + user.email + '.');
-                        //    });
+                            mail(user);
                             res.redirect('/users/login');
                         })
                         .catch(err => console.log(err));
