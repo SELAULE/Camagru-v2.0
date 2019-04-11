@@ -10,6 +10,12 @@ const nodemailer = require('nodemailer');
 const mail = require('../config/auth').mail
 const { ensureAuthinticated } = require('../config/auth');
 
+// Update
+
+router.get('/update', ensureAuthinticated, (req, res) => {
+	res.render('update');
+});
+
 // Register
 
 router.get('/register', (req, res) => {
@@ -87,7 +93,6 @@ router.post('/register', (req, res) => {
                     }));
              }
          })
-         
      }
      //  Generating the token
 
@@ -102,9 +107,56 @@ router.post('/register', (req, res) => {
 });
 
 
+router.post('/update', (req, res, next) => {
+    let {username, email, password} = req.body;
+
+    // User.findOne({id: req.user._id}, (err) => {
+    //     if (err) { console.log("This is the err ... " + err) }
+    //     else {
+            
+    //     }
+    // })
+
+    if (username) {
+        User.findOneAndUpdate({_id: req.user.id}, {$set:{username: username}}, {returnOriginal: false, upsert: true}, (err, doc) => {
+            if (err) {
+                console.log("Something wrong when updating data!");
+            } else {
+                console.log(doc);
+            }
+        });
+    }
+    if (password) {
+        bcrypt.genSalt(10, (err, salt) => 
+                    bcrypt.hash(password, salt, (err, hash) => {
+                        if (err) console.log(err);
+                        newpassword = hash;
+        User.findOneAndUpdate({_id: req.user.id}, {$set:{password: newpassword}}, {returnOriginal: false}, (err, doc) => {
+            if (err) {
+                console.log("Something wrong when updating data!");
+            } else {
+                console.log(doc);
+            }
+        });
+        // console.log(newpassword);
+    }));
+}
+    
+    if (email) {
+        User.findOneAndUpdate({_id: req.user.id}, {$set:{email: email}}, {returnOriginal: false}, (err, doc) => {
+            if (err) {
+                console.log("Something wrong when updating data!");
+            } else {
+                console.log(doc);
+            }
+        });
+    }
+    res.send("Passed ");
+})
+
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect: '/dashboard',
+        successRedirect: '/users/update',
         failureRedirect: '/users/login',
         failureFlash: true
     }) (req, res, next);

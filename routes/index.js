@@ -24,16 +24,16 @@ router.get('/cam', ensureAuthinticated, (req, res) =>
 
 // Update user info
 
-router.get('/update', ensureAuthinticated, (req, res) => {
-	res.render('update');
-})
+// router.get('/update', ensureAuthinticated, (req, res) => {
+// 	res.render('update');
+// })
 
-router.post('/update', (req, res, next) => {
-	let {username, email, password} = req.body;
+// router.post('/update', (req, res, next) => {
+// 	let {username, email, password} = req.body;
 
-	console.log(username);
-	console.log(email);
-	console.log(password);
-})
+// 	console.log(username);
+// 	console.log(email);
+// 	console.log(password);
+// })
 
 module.exports = router;
