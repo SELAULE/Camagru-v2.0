@@ -2,7 +2,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20');
 const LocalStrategy = require('passport-local').Strategy;
 const keys = require('./keys');
-const User = require('../models/user');
+const User = require('../models/user').User;
 const bcrypt = require('bcryptjs');
 
 passport.serializeUser((user, done) => {

@@ -16,9 +16,9 @@ const UserSchema = mongoose.Schema({
         type: String,
         require: true
     },
-    // passwordResetToken: String,
+    passwordResetToken: String,
 
-    // passwordResetTokenDate: Date,
+    passwordResetTokenDate: Date,
 
     email: {
         type: String,
@@ -32,26 +32,31 @@ const UserSchema = mongoose.Schema({
         default: false
     }
 });
-const User = module.exports = mongoose.model('User', UserSchema);
+const User = mongoose.model('User', UserSchema);
 
-// const tokenSchema = new mongoose.Schema({
-//     userId: {
-//         type: mongoose.Schema.Types.ObjectId,
-//         required: true,
-//         ref: 'User'
-//     },
-//     token: {
-//         type: String,
-//         // required: [true,"there is no token here"]
-//     },
-//     createdAt: {
-//         type: Date,
-//         required: true,
-//         default: Date.now,
-//         expires: 43200
-//     }
-// });
-// const Token = module.exports = mongoose.model('Token', tokenSchema);
+const tokenSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
+    },
+    token: {
+        type: String,
+        // required: [true,"there is no token here"]
+    },
+    createdAt: {
+        type: Date,
+        required: true,
+        default: Date.now,
+        expires: 43200
+    }
+});
+const Token = mongoose.model('Token', tokenSchema);
+
+module.exports = {
+    User: User,
+    Token: Token
+}
 
 
 // Creating the user
@@ -80,9 +85,9 @@ const User = module.exports = mongoose.model('User', UserSchema);
 
 // Checking Passwords
 
-module.exports.comparePassword = function (canPassword, hash, callback) {
-    bcrypt.compare(canPassword, hash, (err, isMatch) => {
-    if (err) throw err;
-    callback(null, isMatch);
-});
-}
+// module.exports.comparePassword = function (canPassword, hash, callback) {
+//     bcrypt.compare(canPassword, hash, (err, isMatch) => {
+//     if (err) throw err;
+//     callback(null, isMatch);
+// });
+// }

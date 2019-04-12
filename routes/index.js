@@ -22,7 +22,8 @@ router.get('/cam', ensureAuthinticated, (req, res) =>
 );
 
 router.post('/cam', (req, res, next) => {
-	let data = req.body.base64.replace(/^data:image\/png;base64,/, "");
+	req.body.image = req.body.image.replace(/^data:image\/jpeg+;base64,/, "");
+	req.body.image = req.body.image.replace(/ /g, '+');
 	fs.writeFile('uploads/out.png', data, base64, (err) => {
 		if (err) {
 			console.log(err)

@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const Token = require('../models/user').Token;
 
 module.exports = {
     ensureAuthinticated: function(req, res, next) {
@@ -10,7 +11,7 @@ module.exports = {
     }
 }
 
-    async function mail(user) {
+    async function mail(user, token) {
         let testAccount = await nodemailer.createTestAccount();
 
     // create reusable transporter object using the default SMTP transport
@@ -25,13 +26,23 @@ module.exports = {
         }
     });
 
+    var token = new Token({
+        _userId: user._id,
+        token: crypto.randomBytes(16).toString('hex')
+    });
+     
+    // Save the verification token
+    token.save( (err) => {
+        if (err) { return res.status(500).send({ msg: err.message }); }
+    })
+    
     // console.log("Sent to..." + user.email);
     // send mail with defined transport object
     let info = await transporter.sendMail({
         from: '"Fred Foo 👻" <nselaule@camagru-V2.com>', // sender address
         to: user.email, // list of receivers
-        subject: "Hello ✔", // Subject line
-        text: "Hello world?", // plain text body
+        subject: 'Account Verification Token',
+        text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n' , // Subject line
         html: "<b>Hello world?</b>" // html body
     }, (err, info) => {
         if (err) {

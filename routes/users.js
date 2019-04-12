@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const User = require('../models/user');
-const token = require('../models/user');
+const User = require('../models/user').User;
+const token = require('../models/user').Token;
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
@@ -86,7 +86,18 @@ router.post('/register', (req, res) => {
                         newUser.save()
                         .then(user => {
                             console.log(user);
-                            mail(user);
+                            //   Generating the token
+                            
+                            let token = new token({
+                                _userId: user._id,
+                                token: crypto.randomByte(16).toString('hex')
+                            });
+                            
+                            //  Saving the token
+                            token.save((err) => {
+                                if (err) throw err;
+                            });
+                            mail(user, token);
                             res.redirect('/users/login');
                         })
                         .catch(err => console.log(err));
@@ -94,16 +105,7 @@ router.post('/register', (req, res) => {
              }
          })
      }
-     //  Generating the token
 
-    //  let token = new token({
-    //      _userId: user._id,
-    //      token: crypto.randomByte(16).toString('hex')
-    //     });
-    //     //  Saving the token
-    //     token.save((err) => {
-    //         if (err) throw err;
-    //     });
 });
 
 
@@ -149,7 +151,7 @@ router.post('/update', (req, res, next) => {
 
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect: 'dashboard',
+        successRedirect: '/cam',
         failureRedirect: '/users/login',
         failureFlash: true
     }) (req, res, next);
