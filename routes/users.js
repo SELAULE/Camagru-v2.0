@@ -12,7 +12,7 @@ const { ensureAuthinticated } = require('../config/auth');
 
 // Update
 
-router.get('/update', ensureAuthinticated, (req, res) => {
+router.get('/update', (req, res) => {
 	res.render('update');
 });
 
@@ -110,13 +110,6 @@ router.post('/register', (req, res) => {
 router.post('/update', (req, res, next) => {
     let {username, email, password} = req.body;
 
-    // User.findOne({id: req.user._id}, (err) => {
-    //     if (err) { console.log("This is the err ... " + err) }
-    //     else {
-            
-    //     }
-    // })
-
     if (username) {
         User.findOneAndUpdate({_id: req.user.id}, {$set:{username: username}}, {returnOriginal: false, upsert: true}, (err, doc) => {
             if (err) {
@@ -151,12 +144,12 @@ router.post('/update', (req, res, next) => {
             }
         });
     }
-    res.send("Passed ");
+    res.render('dashboard');
 })
 
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect: '/users/update',
+        successRedirect: 'dashboard',
         failureRedirect: '/users/login',
         failureFlash: true
     }) (req, res, next);

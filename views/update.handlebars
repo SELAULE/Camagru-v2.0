@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
+    {{#if user}}
    <form method="POST" action="/users/update">
 
         <div class="form-group">
@@ -26,5 +27,18 @@
 
         <button type="submit" class="btn btn-secondary">Update</button>
     </form>
+    {{else}}
+   <form method="POST" action="/users/update">
+    <div class="form-group">
+        <label>Password</label>
+        <input type="Password" name="password" class="form-control" placeholder="Password">
+    </div>
+    <div class="form-group">
+        <label> Confirm Password</label>
+        <input type="Password" name="password2" class="form-control" placeholder="Confirm Password">
+    </div>
+        <button type="submit" class="btn btn-secondary">Update</button>
+    </form>
+    {{/if}}
 </body>
 </html>

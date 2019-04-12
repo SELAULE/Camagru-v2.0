@@ -19,21 +19,17 @@ router.get('/cam', ensureAuthinticated, (req, res) =>
 	res.render('cam', {
 		name: req.user.name
 	})
-	// name: req.user.name
 );
 
-// Update user info
-
-// router.get('/update', ensureAuthinticated, (req, res) => {
-// 	res.render('update');
-// })
-
-// router.post('/update', (req, res, next) => {
-// 	let {username, email, password} = req.body;
-
-// 	console.log(username);
-// 	console.log(email);
-// 	console.log(password);
-// })
+router.post('/cam', (req, res, next) => {
+	let data = req.body.base64.replace(/^data:image\/png;base64,/, "");
+	fs.writeFile('uploads/out.png', data, base64, (err) => {
+		if (err) {
+			console.log(err)
+		} else {
+			res.send(JSON.stringify({'status': 1, 'msg': 'Image Uploaded'}));
+		}
+	});
+});
 
 module.exports = router;
