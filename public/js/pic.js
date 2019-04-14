@@ -116,6 +116,7 @@ window.onload = function()
 		const form = document.createElement('form');
 		form.action = '/cam';
 		form.method = 'post';
+		form.enctype = 'multipart/form-data';
 		const myogimage = document.createElement('input');
 		const myoverlay = document.createElement('input');
 		myogimage.type = 'hidden';

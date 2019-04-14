@@ -1,7 +1,18 @@
 const express = require('express');
 const router = express.Router();
+const fs = require('fs');
+const multer = require('multer');
 const { ensureAuthinticated } = require('../config/auth');
 
+const onError  = (req, res) => {
+	res.status(500)
+	.contentType('text/plain')
+	.end('Somethng went wrong');
+}
+
+const upload = multer({
+	dest: '/uploads/'
+})
 // Home page
 router.get('/', (req, res) => {
     res.render('index');
@@ -22,15 +33,7 @@ router.get('/cam', ensureAuthinticated, (req, res) =>
 );
 
 router.post('/cam', (req, res, next) => {
-	req.body.image = req.body.image.replace(/^data:image\/jpeg+;base64,/, "");
-	req.body.image = req.body.image.replace(/ /g, '+');
-	fs.writeFile('uploads/out.png', data, base64, (err) => {
-		if (err) {
-			console.log(err)
-		} else {
-			res.send(JSON.stringify({'status': 1, 'msg': 'Image Uploaded'}));
-		}
-	});
+
 });
 
 module.exports = router;
