@@ -39,7 +39,7 @@
 	<script src="/js/pic.js"></script>
 </head>
 <body>
-	{{!-- <div class="emo_list">
+ <div class="emo_list">
 			<img id="e1" class="emojie" src="img/Face_With_Rolling_Eyes_Emoji_large.png" height='50px' width='50px' style="margin: 17px"><br>
 			<img id="e2" class="emojie" src="img/Fist_Hand_Emoji.png" height='50px' width='50px' style="margin: 17px"><br>
 			<img id="e3" class="emojie" src="img/Ghost_Emoji_large.png" height='50px' width='50px' style="margin: 17px"><br>
@@ -57,14 +57,7 @@
         <v-container>
 			<v-layout row wrap>
 				<v-flex s6>
-			<div class="emo_list">
-			<img id="e1" class="emojie" src="img/Face_With_Rolling_Eyes_Emoji_large.png" height='50px' width='50px' style="margin: 17px"><br>
-			<img id="e2" class="emojie" src="img/Fist_Hand_Emoji.png" height='50px' width='50px' style="margin: 17px"><br>
-			<img id="e3" class="emojie" src="img/Ghost_Emoji_large.png" height='50px' width='50px' style="margin: 17px"><br>
-			<img id="e4" class="emojie" src="img/Poop_Emoji_7b204f05-eec6-4496-91b1-351acc03d2c7_large.png" height='50px' width='50px' style="margin: 17px"><br>
-			<img id="e5" class="emojie" src="img/Very_Mad_Emoji_large.png" height='50px' width='50px' style="margin: 17px"><br>
-			<img id="e6" class="emojie" src="img/smile.png" height='50px' width='50px' style="margin: 17px"><br>
-			{{!-- <br> --}}
+
 		</div>
 		<div class="top_container">
 			<div id="overlay" class="overlay">
@@ -95,20 +88,7 @@
 
 
 		<div class="thumb_nail">
-			{{!-- <?php
-				$db = DB::getInstance();
-				$db->get("gallery", array('user_id', '=', $user->data()->user_id));
-				$images = $db->results();
-				$num_images = $db->count() - 1;
-				for ($i = 0; $i < 3 && $num_images >= 0; $i++) {
-					$img = $images[$num_images]->img_name;
-					$img_id = $images[$num_images]->img_id;
-					echo "<div style = 'float :left;'> <form action='comment.php' method='post'><input type='hidden' name='img_id' value=".$img_id."/><img src='$img' style='margin: 5px; margin-bottom: 1px; margin-top: 1px'><br/>";
-						echo "</form> <div id = 'comms'>";
-						// getComments($db, $img_id);
-					$num_images--;
-				}
-			?> --}}
+
 		</div>
 	</div>
 </body>
