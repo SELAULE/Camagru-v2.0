@@ -33,16 +33,17 @@ router.get('/cam', ensureAuthinticated, (req, res) =>
 );
 
 router.post('/cam', upload.single('img64'), (req, res) => {
-	if (req.file) {
+	console.log(req.body.img64);
+	if (req.body.img64) {
 		console.log('File is uploading... ');
-		var filename = req.file.filename;
+		var filename = req.body.img64.filename;
 		var uploadStatus = 'File successfully Uploaded';
 	} else {
 		console.log('No File Uploaded');
         var filename = 'FILE NOT UPLOADED';
         var uploadStatus = 'File Upload Failed';
 	}
-	res.render('cam', {status: uploadStatus, filename: `The file is  + ${filename}` });
+	res.send({status: uploadStatus, filename: `The file is  + ${filename}` });
 });
 
 module.exports = router;
