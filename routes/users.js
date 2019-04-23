@@ -108,6 +108,7 @@ router.post('/register', (req, res) => {
 
 });
 
+// Updating the user information...
 
 router.post('/update', (req, res, next) => {
     let {username, email, password} = req.body;
@@ -149,6 +150,7 @@ router.post('/update', (req, res, next) => {
     res.render('dashboard');
 })
 
+// User Sign In
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
         successRedirect: '/cam',
@@ -157,7 +159,7 @@ router.post('/login', (req, res, next) => {
     }) (req, res, next);
   });
 
-
+// User sign out
 router.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/users/Login');

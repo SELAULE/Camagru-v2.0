@@ -14,20 +14,31 @@ const passportOauth = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const mongo = require('mongodb');
 const mongoose = require('mongoose');
+const methodOverride = require('method-override');
+const Grid = require('gridfs-stream');
+const multer = require('multer');
+const GridFsStorage = require('multer-gridfs-storage');
+
+
+
 require('./config/passport-setup')(passportOauth);
 // mongoose.connect('mongodb://localhost:27017/camagru-v2', { useNewUrlParser: true })
 //     .then(() => console.log('Mongodb Connected'))
 //     .catch( err => console.log(err));
 
 
- mongoose.connect(keys.mongodb.DBuri, {useNewUrlParser: true},  () => {
+// Conneting to the Atlas
+mongoose.connect(keys.mongodb.DBuri, {useNewUrlParser: true},  () => {
     console.log('conneted to mongo');
     // console.log(keys.mongodb.DBuri);
 });
+
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
+
 const db = mongoose.connection;
 
+// App Routes
 const routes = require('./routes/index');
 const users = require('./routes/users');
 
@@ -43,6 +54,45 @@ app.set('view engine', 'handlebars');
 // app.use(bodyParser.json());
 app.use(express.urlencoded({extended: false}));
 // app.use(cookieParser());
+
+
+// Methode Override middleware
+app.use(methodOverride('_method'));
+
+
+// Init gfs
+let gfs;
+
+db.once('open', () => {
+   gfs = Grid(db.db, mongoose.mongo);
+   gfs.collection('uploads');
+})
+
+
+// Creating a storage Engine
+const storage = new GridFsStorage({
+  url: keys.mongodb.DBuri,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err);
+        }
+        const filename = buf.toString('hex') + path.extname(file.originalname);
+        const fileInfo = {
+          filename: filename,
+          bucketName: 'uploads'
+        };
+        resolve(fileInfo);
+      });
+    });
+  }
+});
+const upload = multer({ storage });
+
+app.post('/upload', upload.single('img64'), (req, res) => {
+    res.json({file: req.body.img64});
+})
 
 // Set static Folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -101,11 +151,6 @@ app.use('/users', users);
 
 app.use('/auth', authRouter);
 
-// // Route to home
-// app.get( '/', (req, res) => {
-//     req.get
-//     res.render('Home')
-// } );
 
 // Port to listing to 
 
