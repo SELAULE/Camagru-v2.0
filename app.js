@@ -15,10 +15,6 @@ const LocalStrategy = require('passport-local').Strategy;
 const mongo = require('mongodb');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
-const Grid = require('gridfs-stream');
-const multer = require('multer');
-const GridFsStorage = require('multer-gridfs-storage');
-
 
 
 require('./config/passport-setup')(passportOauth);
