@@ -10,12 +10,6 @@ const keys = require('../config/keys');
 const nodemailer = require('nodemailer');
 const mail = require('../config/auth').mail
 const { ensureAuthinticated } = require('../config/auth');
-// const db = require('../app');
-// const methodOverride = require('method-override');
-// const Grid = require('gridfs-stream');
-// const mongoose = require('mongoose');
-// const multer = require('multer');
-// const GridFsStorage = require('multer-gridfs-storage');
 
 // Update
 
@@ -156,40 +150,6 @@ router.post('/update', (req, res, next) => {
     }
     res.render('dashboard');
 })
-
-// // Init gfs
-// let gfs;
-
-// db.once('open', () => {
-//    gfs = Grid(db.db, mongoose.mongo);
-//    gfs.collection('uploads');
-// })
-
-
-// // Creating a storage Engine
-// const storage = new GridFsStorage({
-//   url: keys.mongodb.DBuri,
-//   file: (req, file) => {
-//     return new Promise((resolve, reject) => {
-//       crypto.randomBytes(16, (err, buf) => {
-//         if (err) {
-//           return reject(err);
-//         }
-//         const filename = buf.toString('hex') + path.extname(file.originalname);
-//         const fileInfo = {
-//           filename: filename,
-//           bucketName: 'uploads'
-//         };
-//         resolve(fileInfo);
-//       });
-//     });
-//   },
-// });
-// const upload = multer({ storage });
-
-// router.post('/upload', upload.single('img64'), (req, res) => {
-//     res.json({file: req.body});
-// })
 
 // User Sign In
 router.post('/login', (req, res, next) => {

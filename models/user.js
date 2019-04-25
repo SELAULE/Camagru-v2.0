@@ -51,11 +51,19 @@ const tokenSchema = new mongoose.Schema({
         expires: 43200
     }
 });
+
+const picturesSchema = mongoose.Schema({
+    userId: String,
+    image_path: String,
+})
+
+const Images = mongoose.model('Images', picturesSchema);
 const Token = mongoose.model('Token', tokenSchema);
 
 module.exports = {
     User: User,
-    Token: Token
+    Token: Token,
+    Images: Images
 }
 
 

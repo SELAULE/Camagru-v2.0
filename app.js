@@ -34,6 +34,7 @@ mongoose.set('useCreateIndex', true);
 
 const db = mongoose.connection;
 module.exports = db;
+
 // App Routes
 const routes = require('./routes/index');
 const users = require('./routes/users');
@@ -55,40 +56,6 @@ app.use(express.urlencoded({extended: false}));
 // Methode Override middleware
 app.use(methodOverride('_method'));
 
-
-// // Init gfs
-// let gfs;
-
-// db.once('open', () => {
-//    gfs = Grid(db.db, mongoose.mongo);
-//    gfs.collection('uploads');
-// })
-
-
-// // Creating a storage Engine
-// const storage = new GridFsStorage({
-//   url: keys.mongodb.DBuri,
-//   file: (req, file) => {
-//     return new Promise((resolve, reject) => {
-//       crypto.randomBytes(16, (err, buf) => {
-//         if (err) {
-//           return reject(err);
-//         }
-//         const filename = buf.toString('hex') + path.extname(file.originalname);
-//         const fileInfo = {
-//           filename: filename,
-//           bucketName: 'uploads'
-//         };
-//         resolve(fileInfo);
-//       });
-//     });
-//   }
-// });
-// const upload = multer({ storage });
-
-// app.post('/upload', upload.single('img64'), (req, res) => {
-//     res.json({file: req.body});
-// })
 
 // Set static Folder
 app.use(express.static(path.join(__dirname, 'public')));
