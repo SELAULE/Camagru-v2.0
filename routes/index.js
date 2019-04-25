@@ -79,7 +79,7 @@ router.post('/cam', upload.single('img64'), (req, res) => {
 	
 			base64Data = data.replace(/^data:image\/png;base64,/, "");
 			base64Data += base64Data.replace('+', ' ');
-			binaryData = new Buffer.from(base64Data, 'base64').toString('binary');
+			binaryData = new Buffer(fs.readFileSync(req.body.img64)).toString("base64")
 	
 			fs.writeFile("fuck.png", binaryData, "binary", function (err) {
 				console.log(err); // writes out file without error, but it's not a valid image
