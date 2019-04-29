@@ -14,19 +14,19 @@ const { ensureAuthinticated } = require('../config/auth');
 // Update
 
 router.get('/update', (req, res) => {
-	res.render('update');
+	res.render('update', {title: 'Update'});
 });
 
 // Register
 
 router.get('/register', (req, res) => {
-    res.render('register');
+    res.render('register', {title: 'Register'});
 });
 
 // Login
 
 router.get('/login', (req, res) => {
-    res.render('login');
+    res.render('login', {title: 'Login'});
 });
 
 // Register User

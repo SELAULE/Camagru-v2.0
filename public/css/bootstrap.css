@@ -2756,6 +2756,7 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-success {
+  float: right;
   color: #28a745;
   border-color: #28a745;
 }

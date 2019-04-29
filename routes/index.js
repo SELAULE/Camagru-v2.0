@@ -39,11 +39,16 @@ router.get('/dashboard', ensureAuthinticated, (req, res) =>
 	})
 );
 
+// Profile Page
+
+router.get('/profile', ensureAuthinticated, (req, res) => {
+	res.send('Profile Pages lol');
+});
+
 // cam
 router.get('/cam', ensureAuthinticated, (req, res) =>
 	res.render('cam', {
 		name: req.user.name
-
 	})
 );
 
@@ -72,7 +77,7 @@ router.post('/cam', upload.single('img64'), (req, res) => {
 		var uploadStatus = 'File Upload Failed';
 	}
 	
-	res.render('cam', { status: uploadStatus, filename: `The file is  + ${filename}` });
+	res.render('cam', {title: 'Cam'});
 });
 
 module.exports = router;

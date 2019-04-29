@@ -30,10 +30,12 @@
 		  font-weight: bold;
 		  padding-top: 5px; 
 	  }
-	  #signout {
-		  float: right !important;
-		  
-	  }
+    #profile_thumbnail {
+      border-radius: 50%;
+      height: 2.7em;
+      width: 2.7em;
+      margin: 1.0em;
+    }
     </style>
     </head>
 <body>
@@ -41,7 +43,8 @@
 	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 		 <a class="navbar-brand" href="/">Camagru</a>
      {{#if user}}
-	 <p id="welcome_msg">Welcome {{user.name}} </p>
+	 {{!-- <p id="welcome_msg">Welcome {{user.name}} </p> --}}
+   <a href="/profile"><img id="profile_thumbnail" src="/img/Thanos_MCU.0.jpg" alt="Thanos"></a>
       <a id="signout" class="btn btn-outline-success my-2 my-sm-0" href="/users/logout">Sign out</a>
      {{else}}
       <a class="btn btn-outline-success my-2 my-sm-0" href="/users/login">Sign in</a>
