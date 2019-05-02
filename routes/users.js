@@ -154,7 +154,7 @@ router.post('/update', (req, res, next) => {
 // User Sign In
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect: '/cam',
+        successRedirect: '/profile',
         failureRedirect: '/users/login',
         failureFlash: true
     }) (req, res, next);

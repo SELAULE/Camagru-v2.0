@@ -80,13 +80,21 @@ router.post('/cam', upload.single('img64'), (req, res) => {
 	res.render('cam', {title: 'Cam'});
 });
 
-router.get('/profile', function (req, res, next) {
+router.get('/profile', ensureAuthinticated, (req, res, next) => {
 
 	imageModel.find({ userId: req.user._id }, (err, image) => {
 		if (err) return next(err);
 		// res.contentType(image);
-		console.log(image);
-		res.send(image.data);
+		// console.log(image);
+		//var array = JSON.parse("[" + image[0] + "]");
+		
+		// console.log(image.image_path);
+		let theepath = [];
+		image.forEach((images) => {
+			theepath.push(images.image_path);
+		});
+		console.log(theepath);
+		res.render('profile', { images: theepath });
 	});
 });
 
