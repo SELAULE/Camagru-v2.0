@@ -41,9 +41,9 @@ router.get('/dashboard', ensureAuthinticated, (req, res) =>
 
 // Profile Page
 
-router.get('/profile', ensureAuthinticated, (req, res) => {
-	res.send('Profile Pages lol');
-});
+// router.get('/profile', ensureAuthinticated, (req, res) => {
+// 	res.send('Profile Pages lol');
+// });
 
 // cam
 router.get('/cam', ensureAuthinticated, (req, res) =>
@@ -80,20 +80,14 @@ router.post('/cam', upload.single('img64'), (req, res) => {
 	res.render('cam', {title: 'Cam'});
 });
 
-var storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-	  cb(null, '../uploads')
-	},
-	filename: function (req, file, cb) {
-	  if (!file.originalname.match(/\.(png|jpeg|jpg|wav|tif|gif)$/)) {
-		var err = new Error();
-		err.code = 'filetype';
-		return cb(err);
-	  } else {
-		cb(null, Date.now() + "_" + file.originalname);
-	  }
-  
-	}
-  });
+router.get('/profile', function (req, res, next) {
+
+	imageModel.find({ userId: req.user._id }, (err, image) => {
+		if (err) return next(err);
+		// res.contentType(image);
+		console.log(image);
+		res.send(image.data);
+	});
+});
 
 module.exports = router;
