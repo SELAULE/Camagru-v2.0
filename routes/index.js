@@ -80,4 +80,20 @@ router.post('/cam', upload.single('img64'), (req, res) => {
 	res.render('cam', {title: 'Cam'});
 });
 
+var storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+	  cb(null, '../uploads')
+	},
+	filename: function (req, file, cb) {
+	  if (!file.originalname.match(/\.(png|jpeg|jpg|wav|tif|gif)$/)) {
+		var err = new Error();
+		err.code = 'filetype';
+		return cb(err);
+	  } else {
+		cb(null, Date.now() + "_" + file.originalname);
+	  }
+  
+	}
+  });
+
 module.exports = router;

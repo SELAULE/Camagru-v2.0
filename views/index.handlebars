@@ -11,5 +11,10 @@
 <body>
 	<h2>Index</h2>
 	<p>This is the index</p>
+	<div class="col-md-4">
+        <form method="GET" action="/index/{{ image.id }}">
+          <img src="{{ image.path }}" style="width:304px;height:228px;">
+        </form>
+    </div>
 </body>
 </html>
