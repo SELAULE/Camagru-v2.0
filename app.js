@@ -59,6 +59,7 @@ app.use(methodOverride('_method'));
 
 // Set static Folder
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/')));
 
 // Setup Express Session
 app.use(session({
