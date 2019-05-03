@@ -41,9 +41,18 @@ router.get('/dashboard', ensureAuthinticated, (req, res) =>
 
 // Profile Page
 
-// router.get('/profile', ensureAuthinticated, (req, res) => {
-// 	res.send('Profile Pages lol');
-// });
+router.get('/profile', ensureAuthinticated, (req, res, next) => {
+
+	imageModel.find({ userId: req.user._id }, (err, image) => {
+		if (err) return next(err);
+		let theepath = [];
+		image.forEach((images) => {
+			theepath.push(images.image_path);
+		});
+		console.log(theepath);
+		res.render('profile', { images: theepath });
+	});
+});
 
 // cam
 router.get('/cam', ensureAuthinticated, (req, res) =>
@@ -76,26 +85,11 @@ router.post('/cam', upload.single('img64'), (req, res) => {
 		var filename = 'FILE NOT UPLOADED';
 		var uploadStatus = 'File Upload Failed';
 	}
-	
 	res.render('cam', {title: 'Cam'});
 });
 
-router.get('/profile', ensureAuthinticated, (req, res, next) => {
+// Comments
 
-	imageModel.find({ userId: req.user._id }, (err, image) => {
-		if (err) return next(err);
-		// res.contentType(image);
-		// console.log(image);
-		//var array = JSON.parse("[" + image[0] + "]");
-		
-		// console.log(image.image_path);
-		let theepath = [];
-		image.forEach((images) => {
-			theepath.push(images.image_path);
-		});
-		console.log(theepath);
-		res.render('profile', { images: theepath });
-	});
-});
+router.post()
 
 module.exports = router;

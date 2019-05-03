@@ -40,20 +40,7 @@
 	<script src="/js/pic.js"></script>
 </head>
 <body>
- {{!-- <div class="emo_list">
-			<img id="e1" class="emojie" src="img/Face_With_Rolling_Eyes_Emoji_large.png" height='50px' width='50px' style="margin: 17px"><br>
-			<img id="e2" class="emojie" src="img/Fist_Hand_Emoji.png" height='50px' width='50px' style="margin: 17px"><br>
-			<img id="e3" class="emojie" src="img/Ghost_Emoji_large.png" height='50px' width='50px' style="margin: 17px"><br>
-			<img id="e4" class="emojie" src="img/Poop_Emoji_7b204f05-eec6-4496-91b1-351acc03d2c7_large.png" height='50px' width='50px' style="margin: 17px"><br>
-			<img id="e5" class="emojie" src="img/Very_Mad_Emoji_large.png" height='50px' width='50px' style="margin: 17px"><br>
-			<img id="e6" class="emojie" src="img/smile.png" height='50px' width='50px' style="margin: 17px"><br>
-		
-		</div> --}}
-	<div class="main_container">
-		
-		
-<div id="app">
-    <v-app>
+	<div class="main_container">	
 		<div class="emo_list">
 			<img id="e1" class="emojie" src="img/Face_With_Rolling_Eyes_Emoji_large.png" height='50px' width='50px' style="margin: 17px"><br>
 			<img id="e2" class="emojie" src="img/Fist_Hand_Emoji.png" height='50px' width='50px' style="margin: 17px"><br>
@@ -62,12 +49,6 @@
 			<img id="e5" class="emojie" src="img/Very_Mad_Emoji_large.png" height='50px' width='50px' style="margin: 17px"><br>
 			<img id="e6" class="emojie" src="img/smile.png" height='50px' width='50px' style="margin: 17px"><br>
 		
-		</div>
-      <v-content>
-        <v-container>
-			<v-layout row wrap>
-				<v-flex s6>
-
 		</div>
 		<div class="top_container">
 			<div id="overlay" class="overlay">
@@ -78,29 +59,15 @@
 				<video id='video'>Stream not available...</video>
 				<img id="image_upload" height="375" width="500" class="image" name="image" style="display: none"></img>
 			</div>
-			
 			<button id="photo_button" class="btn"><i class="fas fa-camera"></i></button>
 			<canvas id="canvas2"></canvas>
-			<!-- <form action="cam/upload.php" method="post" enctype="multipart/form-data"> -->
-			<!-- <p>Select image to upload: </p> -->
         <input type="file" name="uploadspot" id="uploadspot" style="display: none">
         <button id="fileToUpload" name="fileToUpload" class="btn"><i class="fas fa-upload"></i>
-</button>
+		</button>
 			<button id="save_photo" class="btn"><i class="fas fa-paper-plane"></i></button>
 			<canvas id="canvas"></canvas>
 		</div>
-		</v-flex>
-		</v-layout>
-		</v-container>
-      </v-content>
-    </v-app>
   </div>
-
-
-		<div class="thumb_nail">
-
-		</div>
-	</div>
 </body>
 
 <script>

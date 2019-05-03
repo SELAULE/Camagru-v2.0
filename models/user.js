@@ -32,7 +32,6 @@ const UserSchema = mongoose.Schema({
         default: false
     }
 });
-const User = mongoose.model('User', UserSchema);
 
 const tokenSchema = new mongoose.Schema({
     userId: {
@@ -55,47 +54,22 @@ const tokenSchema = new mongoose.Schema({
 const picturesSchema = mongoose.Schema({
     userId: String,
     image_path: String,
-})
+});
 
+const commentsSchema = mongoose.Schema({
+    image_id: String,
+    user_id: String,
+    comment: String
+});
+
+const Comments = mongoose.model('Comments', commentsSchema);
 const Images = mongoose.model('Images', picturesSchema);
 const Token = mongoose.model('Token', tokenSchema);
+const User = mongoose.model('User', UserSchema);
 
 module.exports = {
     User: User,
     Token: Token,
-    Images: Images
+    Images: Images,
+    Comments: Comments
 }
-
-
-// Creating the user
-
-// const User = module.exports = mongoose.model('User', UserSchema);
-// module.exports.createUser = (newUser, callback) => {
-//     bcrypt.genSalt(10, (err, salt) => {
-//         bcrypt.hash(newUser.password, salt, (err, hash) => {
-//             newUser.password = hash;
-//             newUser.save(callback);
-//         });
-//     });
-// }
-
-// Retrieving the user by username
-// module.exports.getUserByUsername = (username, callback) => {
-//     var query = {username: username};
-//     User.findOne(query, callback);
-// }
-
-// Retrieving the user by Id
-
-// module.exports.getUserById = (id, callback) => {
-//     User.findById(id, callback);
-// }
-
-// Checking Passwords
-
-// module.exports.comparePassword = function (canPassword, hash, callback) {
-//     bcrypt.compare(canPassword, hash, (err, isMatch) => {
-//     if (err) throw err;
-//     callback(null, isMatch);
-// });
-// }

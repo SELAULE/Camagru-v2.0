@@ -3,3 +3,10 @@ body {
   /* background-color: rgba(0, 0, 0, 0.7); */
   padding-top: 3.5rem;
 } 
+
+#display_images {
+  display: inline;
+  border-radius: 5%;
+  width: 30vh;
+  height: 31%;
+}
