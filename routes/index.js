@@ -5,6 +5,7 @@ const multer = require('multer');
 const crypto = require('crypto');
 const { ensureAuthinticated } = require('../config/auth');
 const imageModel = require('../models/user').Images;
+const commentModel = require('../models/user').Comments;
 const User = require('../models/user').User;
 // const onError = (req, res) => {
 // 	res.status(500)
@@ -21,6 +22,16 @@ async function saveThePath(user, filename) {
 	});
 	newImage.save().then(info => {
 	console.log('This is the new Image info ' + info);
+	})
+}
+
+async function uploadComment(user, comment, image_id) {
+	commentModel.findOne({ image_id: image_id }).then((comment) => {
+		if (comment) {
+			console.log('There already a document');
+		} else {
+			console.log('They not There');
+		}
 	})
 }
 
@@ -46,10 +57,13 @@ router.get('/profile', ensureAuthinticated, (req, res, next) => {
 	imageModel.find({ userId: req.user._id }, (err, image) => {
 		if (err) return next(err);
 		let theepath = [];
+		// let theeId = [];
 		image.forEach((images) => {
-			theepath.push(images.image_path);
+			theepath.push(images);
+			// theeId.push(images._id);
 		});
-		console.log(theepath);
+		console.log(theepath._id);
+		// console.log(theeId);
 		res.render('profile', { images: theepath });
 	});
 });
@@ -90,6 +104,11 @@ router.post('/cam', upload.single('img64'), (req, res) => {
 
 // Comments
 
-router.post()
+router.post('/comments', (req, res) => {
+	const { comment, image_id } = req.body;
+	let user = req.user
+	uploadComment(user, comment, image_id);
+	res.send('got it');
+})
 
 module.exports = router;
