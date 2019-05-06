@@ -6,6 +6,7 @@ const crypto = require('crypto');
 const { ensureAuthinticated } = require('../config/auth');
 const imageModel = require('../models/user').Images;
 const commentModel = require('../models/user').Comments;
+const likeModel = require('../models/user').Likes;
 const User = require('../models/user').User;
 // const onError = (req, res) => {
 // 	res.status(500)
@@ -37,9 +38,7 @@ async function uploadComment(user, comments, image_id) {
 					console.log('Eloy Eloy Eloy');
 				}
 			})
-			console.log(theeComment);
 		} else {
-			// let commentobj = {name: user.name, comment: comments}
 			commentobj = JSON.stringify({name: user.name, comment: comments});
 			console.log('Stringified String ' + commentobj);
 			newComment = new commentModel({
@@ -126,6 +125,20 @@ router.post('/comments', (req, res) => {
 	let user = req.user
 	uploadComment(user, comment, image_id);
 	res.send('got it');
-})
+});
+
+router.post('/likes', (req, res) => {
+	req.like
+	likeModel.findOne({ _id: req.user.id }).then((results) => {
+		if (results) {
+			likeModel.updateOne({"$set":{"status": false}})
+		} else {
+			const newLike = new likeModel({
+
+			})
+		}
+	})
+	res.send('Testing');
+});
 
 module.exports = router;

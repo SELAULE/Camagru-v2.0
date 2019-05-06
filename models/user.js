@@ -62,14 +62,21 @@ const commentsSchema = mongoose.Schema({
     comment: String
 });
 
+const likesSchema = mongoose.Schema({
+    imageId: String,
+    userId: String,
+    status: {type: Boolean, default: false}
+})
 const Comments = mongoose.model('Comments', commentsSchema);
 const Images = mongoose.model('Images', picturesSchema);
 const Token = mongoose.model('Token', tokenSchema);
+const Likes = mongoose.model('Likes', likesSchema);
 const User = mongoose.model('User', UserSchema);
 
 module.exports = {
     User: User,
     Token: Token,
+    Likes: Likes,
     Images: Images,
     Comments: Comments
 }
