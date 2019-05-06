@@ -25,12 +25,30 @@ async function saveThePath(user, filename) {
 	})
 }
 
-async function uploadComment(user, comment, image_id) {
+async function uploadComment(user, comments, image_id) {
+	
 	commentModel.findOne({ image_id: image_id }).then((comment) => {
 		if (comment) {
-			console.log('There already a document');
+			let theeComment = comment.comment + ', ' + JSON.stringify({name: user.name, comment: comments});
+			commentModel.updateOne({ comment: theeComment }, (err) => {
+				if (err) {
+					console.log(err);
+				} else {
+					console.log('Eloy Eloy Eloy');
+				}
+			})
+			console.log(theeComment);
 		} else {
-			console.log('They not There');
+			// let commentobj = {name: user.name, comment: comments}
+			commentobj = JSON.stringify({name: user.name, comment: comments});
+			console.log('Stringified String ' + commentobj);
+			newComment = new commentModel({
+				image_id: image_id,
+				comment: commentobj
+			});
+			newComment.save().then(info => {
+				console.log('Lets see ' + info);
+			});
 		}
 	})
 }
@@ -60,9 +78,8 @@ router.get('/profile', ensureAuthinticated, (req, res, next) => {
 		// let theeId = [];
 		image.forEach((images) => {
 			theepath.push(images);
-			// theeId.push(images._id);
 		});
-		console.log(theepath._id);
+		// console.log(theepath._id);
 		// console.log(theeId);
 		res.render('profile', { images: theepath });
 	});

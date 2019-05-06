@@ -58,7 +58,7 @@ const picturesSchema = mongoose.Schema({
 
 const commentsSchema = mongoose.Schema({
     image_id: String,
-    user_id: String,
+    // username: String,
     comment: String
 });
 
