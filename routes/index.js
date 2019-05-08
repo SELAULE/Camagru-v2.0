@@ -128,16 +128,7 @@ router.post('/comments', (req, res) => {
 });
 
 router.post('/likes', (req, res) => {
-	req.like
-	likeModel.findOne({ _id: req.user.id }).then((results) => {
-		if (results) {
-			likeModel.updateOne({"$set":{"status": false}})
-		} else {
-			const newLike = new likeModel({
-
-			})
-		}
-	})
+	console.log('Are we really coming here???');
 	res.send('Testing');
 });
 
