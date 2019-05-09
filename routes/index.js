@@ -14,6 +14,8 @@ const User = require('../models/user').User;
 // 		.end('Somethng went wrong');
 // }
 
+
+
 async function saveThePath(user, filename) {
 	let user_id = user._id;
 
@@ -128,8 +130,22 @@ router.post('/comments', (req, res) => {
 });
 
 router.post('/likes', (req, res) => {
-	console.log('Are we really coming here???');
-	res.send('Testing');
+    likeModel.findOne({ _id: req.user.id })
+    .then((doc) => {
+		if (doc) {
+		console.log(doc);
+		} else {
+			const newLike = new likeModel ({
+				imageId: id,
+				userId: req.user.id,
+				status: true
+			})
+		}
+		// res.json({ success: true });
+    })
+    .catch(err => {
+        res.status.json({ err: err });
+    });
 });
 
 module.exports = router;

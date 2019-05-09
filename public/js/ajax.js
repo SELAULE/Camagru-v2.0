@@ -1,17 +1,17 @@
-const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-const xmlhttp = new XMLHttpRequest();
-
-function likes(img_id) {
-  // alert('Got it' + img_id.getAttribute("data-imgid"));
-
-    // var xmlhttp = new XMLHttpRequest();
-
-    xmlhttp.open("POST", "/likes", true);
-    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.onreadystatechange = function() {
-      if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-      	alert('In here');
-    }
-  };
-  xmlhttp.send("img_id=" + img_id.getAttribute("data-imgid"));
-}
+$('.like-btn').on('click', '#like-btn', function(event) {
+	event.preventDefault();
+	const id = $(this).attr('data-id');
+	alert(id);
+	$.ajax({
+		url: '/likes',
+		method: 'POST',
+		data: { id: id }
+		}).done(function(res) {
+			if (res.success) {
+			console.log('id from ajax call is', res);
+			window.location.reload();
+		} else {
+			console.log('error...ajax');
+			}
+	});
+})
