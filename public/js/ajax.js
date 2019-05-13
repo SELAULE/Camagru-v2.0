@@ -5,7 +5,7 @@ $('.like-btn').on('click', '#like-btn', function(event) {
 	$.ajax({
 		url: '/likes',
 		method: 'POST',
-		data: { id: id }
+		data:  JSON.stringify(id)
 		}).done(function(res) {
 			if (res.success) {
 			console.log('id from ajax call is', res);

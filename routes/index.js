@@ -58,8 +58,15 @@ const upload = multer({
 	dest: './uploads/'
 })
 // Home page
-router.get('/', (req, res) => {
-	res.render('index');
+router.get('/', (req, res, next) => {
+	imageModel.find({ }, (err, image) => {
+		if (err) return next(err);
+		let theepath = [];
+		image.forEach((images) => {
+			theepath.push(images);
+		});
+		res.render('index', { images: theepath });
+	});
 });
 
 // Dashboard Page
@@ -85,6 +92,20 @@ router.get('/profile', ensureAuthinticated, (req, res, next) => {
 		res.render('profile', { images: theepath });
 	});
 });
+
+// Index page
+
+// router.get('/', (req, res, next) => {
+
+// 	imageModel.find({ }, (err, image) => {
+// 		if (err) return next(err);
+// 		let theepath = [];
+// 		image.forEach((images) => {
+// 			theepath.push(images);
+// 		});
+// 		res.render('profile', { images: theepath });
+// 	});
+// });
 
 // cam
 router.get('/cam', ensureAuthinticated, (req, res) =>
@@ -130,6 +151,7 @@ router.post('/comments', (req, res) => {
 });
 
 router.post('/likes', (req, res) => {
+	console.log('This is the body' + JSON.stringify(req.body));
     likeModel.findOne({ _id: req.user.id })
     .then((doc) => {
 		if (doc) {
@@ -140,11 +162,11 @@ router.post('/likes', (req, res) => {
 				userId: req.user.id,
 				status: true
 			})
+			console.log(newLike);
 		}
-		// res.json({ success: true });
     })
     .catch(err => {
-        res.status.json({ err: err });
+        console.log(err);
     });
 });
 

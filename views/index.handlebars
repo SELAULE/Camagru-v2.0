@@ -7,14 +7,62 @@
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 	<title>Index</title>
+	<style>
+        img {
+            display: inline;
+            border-radius: 5%;
+            width: 30vh;
+            height: 31%;
+        }
+        .container {
+  position: relative;
+  width: 50%;
+}
+
+/* Make the image responsive */
+.container img {
+  width: 100%;
+  height: auto;
+}
+
+/* Style the button and place it in the middle of the container/image */
+.container .btn {
+  position: absolute;
+  top: 100%;
+  left: 70%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: transparent;
+  color: white;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+    </style>
 </head>
 <body>
 	<h2>Index</h2>
 	<p>This is the index</p>
 	<div class="col-md-4">
-        <form method="GET" action="/index/{{ image.id }}">
-          <img src="{{ image.path }}" style="width:304px;height:228px;">
-        </form>
+        {{#each images}}
+    <div class="display_images">
+        <img src="{{this.image_path}}" alt="myImages">
+        <button class="btn"><span><i class="fas fa-comments"></i></span></button>
+        <button class="btn"><span><i class="fas fa-thumbs-up"></i></span></button>
+        
+    <form action="/comments" method="POST">
+        <div class="comments">
+            <input type="text" name="comment">
+            <input type="hidden" name="image_id" value="{{this._id}}">
+            <input type="submit" name="submit">
+        </div>
+    </form>
+        <button class="like-btn"><i data-id="{{this._id}}" id="like-btn" class='fa fa-thumbs-up'></i></button>
+        {{!-- <button class="btn-danger" id="delete-btn" data-id="{{this._id}}">X</button> --}}
+    </div>
+{{/each}}
     </div>
 </body>
 </html>
