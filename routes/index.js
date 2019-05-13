@@ -150,13 +150,14 @@ router.post('/comments', (req, res) => {
 	res.send('got it');
 });
 
-router.post('/likes', (req, res) => {
+router.post('/likes', ensureAuthinticated, (req, res) => {
 	let id = JSON.stringify(req.body);
 	id = id.replace(/[^\w\s]/gi, '');
-    likeModel.findOne({ imageId: req.user.id })
+    likeModel.findOne({ imageId: id })
     .then((doc) => {
 		if (doc) {
-		console.log(doc);
+			likeModel.deleteOne({}).then(result => console.log('deleted'))
+			.catch(err => console.log(err))
 		} else {
 			const newLike = new likeModel ({
 				imageId: id,
