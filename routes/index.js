@@ -151,8 +151,9 @@ router.post('/comments', (req, res) => {
 });
 
 router.post('/likes', (req, res) => {
-	console.log('This is the body' + JSON.stringify(req.body));
-    likeModel.findOne({ _id: req.user.id })
+	let id = JSON.stringify(req.body);
+	id = id.replace(/[^\w\s]/gi, '');
+    likeModel.findOne({ imageId: req.user.id })
     .then((doc) => {
 		if (doc) {
 		console.log(doc);
@@ -162,7 +163,9 @@ router.post('/likes', (req, res) => {
 				userId: req.user.id,
 				status: true
 			})
-			console.log(newLike);
+			newLike.save()
+			.then(like => console.log(like))
+			.catch(err => console.log(err));
 		}
     })
     .catch(err => {
