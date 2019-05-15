@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/user').User;
-const token = require('../models/user').Token;
+const tokenModel = require('../models/user').Token;
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const keys = require('../config/keys');
@@ -89,16 +89,16 @@ router.post('/register', (req, res) => {
                             console.log(user);
                             //   Generating the token
                             
-                            let token = new token({
-                                _userId: user._id,
-                                token: crypto.randomByte(16).toString('hex')
-                            });
+                            // let token = new tokenModel({
+                            //     userId: user._id,
+                            //     token: crypto.randomBytes(16).toString('hex')
+                            // });
                             
-                            //  Saving the token
-                            token.save((err) => {
-                                if (err) throw err;
-                            });
-                            mail(user, token);
+                            // //  Saving the token
+                            // token.save((err) => {
+                            //     if (err) throw err;
+                            // });
+                            mail(user, tokenModel);
                             res.redirect('/users/login');
                         })
                         .catch(err => console.log(err));

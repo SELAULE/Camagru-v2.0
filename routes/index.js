@@ -8,11 +8,7 @@ const imageModel = require('../models/user').Images;
 const commentModel = require('../models/user').Comments;
 const likeModel = require('../models/user').Likes;
 const User = require('../models/user').User;
-// const onError = (req, res) => {
-// 	res.status(500)
-// 		.contentType('text/plain')
-// 		.end('Somethng went wrong');
-// }
+
 
 
 
@@ -35,14 +31,11 @@ async function uploadComment(user, comments, image_id) {
 			let theeComment = comment.comment + ', ' + JSON.stringify({name: user.name, comment: comments});
 			commentModel.updateOne({ comment: theeComment }, (err) => {
 				if (err) {
-					console.log(err);
-				} else {
-					console.log('Eloy Eloy Eloy');
+					throw(err);
 				}
 			})
 		} else {
 			commentobj = JSON.stringify({name: user.name, comment: comments});
-			console.log('Stringified String ' + commentobj);
 			newComment = new commentModel({
 				image_id: image_id,
 				comment: commentobj
@@ -57,6 +50,7 @@ async function uploadComment(user, comments, image_id) {
 const upload = multer({
 	dest: './uploads/'
 })
+
 // Home page
 router.get('/', (req, res, next) => {
 	imageModel.find({ }, (err, image) => {
@@ -83,29 +77,29 @@ router.get('/profile', ensureAuthinticated, (req, res, next) => {
 	imageModel.find({ userId: req.user._id }, (err, image) => {
 		if (err) return next(err);
 		let theepath = [];
-		// let theeId = [];
+		let likes = [];
+
 		image.forEach((images) => {
 			theepath.push(images);
+			// likeModel.countDocuments({ imageId: images._id }, (err, doc) => {
+			// 	likes.push(doc);
+			// })
 		});
-		// console.log(theepath._id);
-		// console.log(theeId);
+		// let allTheInfo = {
+		// 	theepath = theepath,
+		// 	likes = likes
+		// }
+		console.log('This is the info   ' + allTheInfo);
 		res.render('profile', { images: theepath });
 	});
 });
 
-// Index page
+// Getting the likes
 
-// router.get('/', (req, res, next) => {
-
-// 	imageModel.find({ }, (err, image) => {
-// 		if (err) return next(err);
-// 		let theepath = [];
-// 		image.forEach((images) => {
-// 			theepath.push(images);
-// 		});
-// 		res.render('profile', { images: theepath });
-// 	});
-// });
+router.get('/likes', (req, res) => {
+	likeModel.countDocuments().then(count => console.log(count));
+	res.send('Oops');
+});
 
 // cam
 router.get('/cam', ensureAuthinticated, (req, res) =>

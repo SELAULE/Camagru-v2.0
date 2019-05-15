@@ -7,7 +7,7 @@ $('.like-btn').on('click', '#like-btn', function(event) {
 		method: 'POST',
 		data:  JSON.stringify(id)
 		}).done(function(res) {
-			if (res.success) {
+				if (res.success) {
 			console.log('id from ajax call is', res);
 			window.location.reload();
 		} else {

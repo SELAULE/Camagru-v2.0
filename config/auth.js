@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 const Token = require('../models/user').Token;
+const crypto = require('crypto');
 
 module.exports = {
     ensureAuthinticated: function(req, res, next) {
@@ -27,7 +28,7 @@ module.exports = {
     });
 
     var token = new Token({
-        _userId: user._id,
+        userId: user._id,
         token: crypto.randomBytes(16).toString('hex')
     });
      
