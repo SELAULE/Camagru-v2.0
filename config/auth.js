@@ -40,10 +40,10 @@ module.exports = {
     // console.log("Sent to..." + user.email);
     // send mail with defined transport object
     let info = await transporter.sendMail({
-        from: '"Fred Foo 👻" <nselaule@camagru-V2.com>', // sender address
+        from: '"nselaule 👻" <nselaule@camagru-V2.com>', // sender address
         to: user.email, // list of receivers
         subject: 'Account Verification Token',
-        text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + token.token + '.\n' , // Subject line
+        text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/\/confirmation\/' + token.token + '.\n' , // Subject line
         html: "<b>Hello world?</b>" // html body
     }, (err, info) => {
         if (err) {

@@ -31,7 +31,7 @@ async function uploadComment(user, comments, image_id) {
 			let theeComment = comment.comment + ', ' + JSON.stringify({name: user.name, comment: comments});
 			commentModel.updateOne({ comment: theeComment }, (err) => {
 				if (err) {
-					throw(err);
+					console.log(err);
 				}
 			})
 		} else {
@@ -73,23 +73,28 @@ router.get('/dashboard', ensureAuthinticated, (req, res) =>
 // Profile Page
 
 router.get('/profile', ensureAuthinticated, (req, res, next) => {
-
+	
+	let likes = [];
+	let comments = [];
 	imageModel.find({ userId: req.user._id }, (err, image) => {
 		if (err) return next(err);
 		let theepath = [];
-		let likes = [];
-
 		image.forEach((images) => {
 			theepath.push(images);
-			// likeModel.countDocuments({ imageId: images._id }, (err, doc) => {
-			// 	likes.push(doc);
-			// })
+			likeModel.find({ imageId: images._id }).then((doc) => {
+				// console.log(doc.length);
+				likes.push(doc);
+				// console.log(doc);
+			}).catch((err) => console.log(err));
+
+			commentModel.find({ image_id: images._id }).then((doc) => {
+				// console.log(doc.length);
+				comments.push(doc);
+				// console.log(doc);
+			}).catch((err) => console.log(err));
 		});
-		// let allTheInfo = {
-		// 	theepath = theepath,
-		// 	likes = likes
-		// }
-		console.log('This is the info   ' + allTheInfo);
+		console.log(likes);
+		console.log(comments);
 		res.render('profile', { images: theepath });
 	});
 });

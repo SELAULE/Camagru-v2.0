@@ -1,5 +1,7 @@
 
 <head>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
 	<style>
         img {
             display: inline;
@@ -19,39 +21,62 @@
 }
 
 /* Style the button and place it in the middle of the container/image */
-.container .btn {
-  position: absolute;
-  top: 100%;
-  left: 70%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  background-color: transparent;
-  color: white;
-  font-size: 16px;
-  padding: 12px 24px;
-  border: none;
+ .collapsible {
   cursor: pointer;
-  border-radius: 5px;
+  padding: 18px;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+
+
+.content {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
 }
     </style>
 </head>
 {{#each images}}
     <div class="display_images">
         <img src="{{this.theepath.image_path}}" alt="myImages">
-        <button class="btn"><span><i class="fas fa-comments"></i></span></button>
-        <button class="btn"><span><i class="fas fa-thumbs-up"></i></span></button>
         
     <form action="/comments" method="POST">
         <div class="comments">
-            <input type="text" name="comment">
+            <input type="text" name="comment" required>
             <input type="hidden" name="image_id" value="{{this._id}}">
-            <input type="submit" name="submit">
+            <button class="btn btn-primary" type="submit">Post</button>
         </div>
     </form>
-        <button class="like-btn"><i data-id="{{this._id}}" id="like-btn" class='fa fa-thumbs-up'></i></button>
+        <button class="btn collapsible"><span><i class="fas fa-comments"></i></span></button>
+        <div class="content">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore e t dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      </div>
+        <button class="btn like-btn"><span><i data-id="{{this._id}}" id="like-btn" class="fas fa-thumbs-up"></i></span></button>
+        
         {{!-- <button class="btn-danger" id="delete-btn" data-id="{{this._id}}">X</button> --}}
     </div>
 {{/each}}
+
+<script>
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.maxHeight){
+        content.style.maxHeight = null;
+      } else {
+        content.style.maxHeight = content.scrollHeight + "px";
+      }
+    });
+  }
+  </script>
 
 <script src="/js/jquery.js"></script>
 <script src="/js/ajax.js"></script>
