@@ -81,20 +81,33 @@ router.get('/profile', ensureAuthinticated, (req, res, next) => {
 		let theepath = [];
 		image.forEach((images) => {
 			theepath.push(images);
-			likeModel.find({ imageId: images._id }).then((doc) => {
-				// console.log(doc.length);
-				likes.push(doc);
-				// console.log(doc);
-			}).catch((err) => console.log(err));
+			let likesPromise = () => {
+				return new Promise ((resolve, reject) => {
+					likeModel.find({ imageId: images._id }, (err, data) => {
+						// console.log( 'This is data ' + data);
+						err ? reject(err) : resolve (data);
+					});
+				});
+			};
 
+			callLikesPromise = async () => {
+				let result = await (likesPromise());
+				console.log(result);
+				return result;
+			}
+			// console.log(callLikesPromise());
+			callLikesPromise().then((result) => {
+				// console.log( 'This is the returned value ' + result);
+			})
 			commentModel.find({ image_id: images._id }).then((doc) => {
-				// console.log(doc.length);
-				comments.push(doc);
-				// console.log(doc);
+				doc.forEach((doc) => {
+					comments.push(doc);
+					// console.log(doc);
+				})
 			}).catch((err) => console.log(err));
 		});
-		console.log(likes);
-		console.log(comments);
+		// console.log(likes);
+		// console.log(comments);
 		res.render('profile', { images: theepath });
 	});
 });

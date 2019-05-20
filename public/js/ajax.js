@@ -15,3 +15,7 @@ $('.like-btn').on('click', '#like-btn', function(event) {
 			}
 	});
 })
+
+$(document).ready(function(){
+  $(".dropdown-toggle").dropdown();
+});

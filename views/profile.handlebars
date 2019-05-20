@@ -37,6 +37,9 @@
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
+  background-color: #1E5467;
+  color: #fff;
+  border-radius: 10%;
 }
     </style>
 </head>
@@ -56,8 +59,6 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore e t dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
       </div>
         <button class="btn like-btn"><span><i data-id="{{this._id}}" id="like-btn" class="fas fa-thumbs-up"></i></span></button>
-        
-        {{!-- <button class="btn-danger" id="delete-btn" data-id="{{this._id}}">X</button> --}}
     </div>
 {{/each}}
 
