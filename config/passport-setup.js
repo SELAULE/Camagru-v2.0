@@ -28,11 +28,11 @@ passport.use(
                 done (null, currentUser);
             } else {
                 const newUser = new User ({
+                    active: true,
                     username: email.displayName,
                     googleid: email.id,
                     name: email.name.givenName,
                     email: email.emails[0].value
-                    // email: 
                 }).save().then((newUser) => {
                     console.log('User saved' + newUser);
                     done (null, newUser);

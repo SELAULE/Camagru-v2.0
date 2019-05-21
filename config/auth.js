@@ -43,8 +43,8 @@ module.exports = {
         from: '"nselaule 👻" <nselaule@camagru-V2.com>', // sender address
         to: user.email, // list of receivers
         subject: 'Account Verification Token',
-        text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/\/confirmation\/' + token.token + '.\n' , // Subject line
-        html: "<b>Hello world?</b>" // html body
+        text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nlocalhost:3000\/\/login\/' + token.token + '.\n' , // Subject line
+        html: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/confirmation\/' + token.token + '.\n' // html body
     }, (err, info) => {
         if (err) {
             console.log("This is the error... " + err);

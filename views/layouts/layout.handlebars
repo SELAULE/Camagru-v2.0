@@ -78,14 +78,13 @@
     <span><a href="/cam"><img src="https://img.icons8.com/wired/50/000000/instagram.png"></a></span>
    
    <div class="dropdown bg-light">
-    <span class="dropdown-toggle" id="menu1" data-toggle="dropdown"><img id="profile_thumbnail" src="https://cdn.vox-cdn.com/thumbor/JBJzwCXmTJs0NgnFtSPm_f5SMyw=/0x0:2000x1000/1200x800/filters:focal(654x138:974x458)/cdn.vox-cdn.com/uploads/chorus_image/image/59408999/Thanos_MCU.0.jpg" alt="Thanos">
+    <span class="dropdown-toggle" id="menu1" data-toggle="dropdown"><p>{{user.name}}</p><img id="profile_thumbnail" src="https://cdn.vox-cdn.com/thumbor/JBJzwCXmTJs0NgnFtSPm_f5SMyw=/0x0:2000x1000/1200x800/filters:focal(654x138:974x458)/cdn.vox-cdn.com/uploads/chorus_image/image/59408999/Thanos_MCU.0.jpg" alt="Thanos">
     </span>
     <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
       <li role="presentation"><a role="menuitem" tabindex="-1" href="/profile">{{user.name}}</a></li>
       <li role="presentation"><a role="menuitem" tabindex="-1" href="/users/logout">Sign out</a></li>
     </ul>
   </div>
-      <!-- <a id="signout" class="btn btn-outline-success my-2 my-sm-0" href="/users/logout">Sign out</a> -->
      {{else}}
       <a class="btn btn-outline-success my-2 my-sm-0" href="/users/login">Sign in</a>
       <a class="btn btn-outline-success my-2 my-sm-0" href="/users/register">Sign up</a>
