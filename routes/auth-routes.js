@@ -19,7 +19,7 @@ router.get('/google', passport.authenticate('google', {
 router.get('/google/redirect', 
 passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
     // console.log(res); 
-    res.render('dashboard');
+    res.redirect('/');
 });
 
 module.exports = router;
