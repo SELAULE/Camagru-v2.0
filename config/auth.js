@@ -53,14 +53,49 @@ module.exports = {
         }
     });
 
-    // console.log("Message sent: %s", info.messageId);
-    // console.log("Test account: %s", testAccount.user);
-    // console.log("Test password: %s", testAccount.pass);
-    // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
     // Preview only available when sending through an Ethereal account
     console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
     // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 }
 
+async function notificationMail(user, subject, activity) {
+    let testAccount = await nodemailer.createTestAccount();
+
+// create reusable transporter object using the default SMTP transport
+let transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    // service: 'gmail',
+    auth: {
+        user: 'sitholentsako4@gmail.com', // generated ethereal user
+        pass: '19981214' // generated ethereal password
+    }
+});
+
+
+// console.log("Sent to..." + user.email);
+// send mail with defined transport object
+let info = await transporter.sendMail({
+    from: '"nselaule 👻" <nselaule@camagru-V2.com>', // sender address
+    to: user.email, // list of receivers
+    subject: subject,
+    // text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nlocalhost:3000\/\/login\/' + token.token + '.\n' , // Subject line
+    html: 'Hello There dummie,\n\n' + user.name + ' ' + activity + ' your post. \n' // html body
+}, (err, info) => {
+    if (err) {
+        console.log("This is the error... " + err);
+    } else {
+        console.log("This was a success... " + info);
+    }
+});
+
+
+// Preview only available when sending through an Ethereal account
+console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+// Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+}
+
 module.exports.mail = mail;
+module.exports.notificationMail = notificationMail;

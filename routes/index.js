@@ -7,6 +7,7 @@ const { ensureAuthinticated } = require('../config/auth');
 const imageModel = require('../models/user').Images;
 const commentModel = require('../models/user').Comments;
 const likeModel = require('../models/user').Likes;
+const notifyMail = require('../config/auth').notificationMail
 const User = require('../models/user').User;
 
 
@@ -41,6 +42,9 @@ async function uploadComment(user, comments, image_id) {
 				comment: commentobj
 			});
 			newComment.save().then(info => {
+				let subject = "Someone comment your post";
+				let activity = 'Commented';
+				notifyMail(user, subject, activity);
 				console.log('Lets see ' + info);
 			});
 		}
@@ -175,7 +179,7 @@ router.post('/comments', (req, res) => {
 	const { comment, image_id } = req.body;
 	let user = req.user
 	uploadComment(user, comment, image_id);
-	res.send('got it');
+	res.render('index');
 });
 
 router.post('/likes', ensureAuthinticated, (req, res) => {
@@ -193,7 +197,12 @@ router.post('/likes', ensureAuthinticated, (req, res) => {
 				status: true
 			})
 			newLike.save()
-			.then(like => console.log(like))
+			.then((like) => {
+				let subject = "Someone Liked your post";
+				let activity = 'Liked';
+				notifyMail(req.user, subject, activity);
+				console.log(like)
+			})
 			.catch(err => console.log(err));
 		}
     })
