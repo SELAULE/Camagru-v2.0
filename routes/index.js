@@ -198,9 +198,11 @@ router.post('/likes', ensureAuthinticated, (req, res) => {
 			})
 			newLike.save()
 			.then((like) => {
-				let subject = "Someone Liked your post";
-				let activity = 'Liked';
-				notifyMail(req.user, subject, activity);
+				if (req.user.notify == true) {
+					let subject = "Someone Liked your post";
+					let activity = 'Liked';
+					notifyMail(req.user, subject, activity);
+				}
 				console.log(like)
 			})
 			.catch(err => console.log(err));

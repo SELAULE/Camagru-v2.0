@@ -44,7 +44,7 @@ module.exports = {
         to: user.email, // list of receivers
         subject: 'Account Verification Token',
         text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nlocalhost:3000\/\/login\/' + token.token + '.\n' , // Subject line
-        html: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/confirmation\/' + token.token + '.\n' // html body
+        html: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/localhost:3000\/verify\/' + token.token + '.\n' // html body
     }, (err, info) => {
         if (err) {
             console.log("This is the error... " + err);
@@ -53,10 +53,6 @@ module.exports = {
         }
     });
 
-
-    // Preview only available when sending through an Ethereal account
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-    // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 }
 
 async function notificationMail(user, subject, activity) {
@@ -91,10 +87,6 @@ let info = await transporter.sendMail({
     }
 });
 
-
-// Preview only available when sending through an Ethereal account
-console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-// Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 }
 
 module.exports.mail = mail;

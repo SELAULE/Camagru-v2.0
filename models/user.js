@@ -30,6 +30,10 @@ const UserSchema = mongoose.Schema({
     active: {
         type: Boolean,
         default: false
+    },
+    notify: {
+        type: Boolean,
+        default: true
     }
 });
 

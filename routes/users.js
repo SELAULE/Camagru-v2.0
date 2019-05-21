@@ -87,17 +87,7 @@ router.post('/register', (req, res) => {
                         newUser.save()
                         .then(user => {
                             console.log(user);
-                            //   Generating the token
-                            
-                            // let token = new tokenModel({
-                            //     userId: user._id,
-                            //     token: crypto.randomBytes(16).toString('hex')
-                            // });
-                            
-                            // //  Saving the token
-                            // token.save((err) => {
-                            //     if (err) throw err;
-                            // });
+
                             mail(user, tokenModel);
                             res.redirect('/users/login');
                         })
@@ -159,6 +149,16 @@ router.post('/login', (req, res, next) => {
         failureFlash: true
     }) (req, res, next);
   });
+
+router.get('/verify/:id', (req, res) => {
+    User.findOneAndUpdate({ email: email }, {$set:{active: true}}, {returnOriginal: false}, (err, doc) => {
+        if (err) {
+            console.log("Something wrong when Verifying!");
+        } else {
+            console.log('Done');
+        }
+    });
+})
 
 // User sign out
 router.get('/logout', (req, res) => {
