@@ -2497,6 +2497,12 @@ fieldset:disabled a.btn {
   border-color: #28a745;
 }
 
+.btn-success-cam {
+  color: #fff;
+  background-color: transparent;
+  border-color: #28a745;
+}
+
 .btn-success:hover {
   color: #fff;
   background-color: #218838;
@@ -6574,6 +6580,7 @@ button.bg-danger:focus {
 
 .bg-light {
   background-color: #f8f9fa !important;
+  float: right;
 }
 
 a.bg-light:hover, a.bg-light:focus,

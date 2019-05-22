@@ -9,6 +9,7 @@
 	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+    {{!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> --}}
     <script type="text/javascript" src="/js/jquery.js"></script>
     <script type="text/javascript" src="/js/ajax.js"></script>
     <script type="text/javascript" src="/js/bootstrap.js"></script>
@@ -40,6 +41,9 @@
       width: 2.7em;
       margin-right: 1.0em;
     }
+    .profile_icon {
+      float: right;
+    }
     li a{
       text-decoration: none;
       color: #000;
@@ -57,6 +61,7 @@
     }
     .dropdown:hover>.dropdown-menu {
       display: block;
+      border: 1px solid #28a745;
     }
     h5 a {
       color: #000;
@@ -75,18 +80,18 @@
 <body>
 
 	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-light">
-		 <h5 class="header"><a href="/">Camagru</a></h5>
+		 <h5 class="header text-secondary"><a href="/">Camagru</a></h5>
      {{#if user}}
     <span class="icons"><a href="/cam"><img src="https://img.icons8.com/wired/35/000000/instagram.png"></a></span>
     <span class="icons"><a href="/users/update"><img src="https://img.icons8.com/wired/35/000000/admin-settings-male.png"></a></span>
 
    
-   <div class="dropdown bg-light">
+   <div class="dropdown bg-light navbar-right btn-outline-success">
     <span class="dropdown-toggle" id="menu1" data-toggle="dropdown"><img id="profile_thumbnail" src="https://cdn.vox-cdn.com/thumbor/JBJzwCXmTJs0NgnFtSPm_f5SMyw=/0x0:2000x1000/1200x800/filters:focal(654x138:974x458)/cdn.vox-cdn.com/uploads/chorus_image/image/59408999/Thanos_MCU.0.jpg" alt="Thanos">
     {{user.name}}</span>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="/profile"><img class="icons" src="https://img.icons8.com/wired/34/000000/user.png">{{user.name}}</a></li> <hr>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="/users/logout"><img class="icons" src="https://img.icons8.com/wired/34/000000/login-rounded-right.png">Sign out</a></li>
+    <ul class="dropdown-menu " role="menu" aria-labelledby="menu1">
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="/profile" class="text-success"><img class="icons" src="https://img.icons8.com/wired/34/000000/user.png">{{user.name}}</a></li> <hr class="text-success">
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="/users/logout" class="text-success"><img class="icons" src="https://img.icons8.com/wired/34/000000/login-rounded-right.png">Sign out</a></li>
     </ul>
   </div>
      {{else}}
@@ -124,7 +129,7 @@
 </main>
 
 <footer class="container">
-  <p>&copy; Camagru-v2</p>
+  <p class="text-success">&copy; Camagru-v2</p>
 </footer>
 
 <script>

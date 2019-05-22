@@ -16,17 +16,17 @@
    <form method="POST" action="/users/update">
 
         <div class="form-group">
-            <label>Username </label>
+            <label class="text-success">Username </label>
             <input type="text" name="username" class="form-control" placeholder="Username">
         </div>
 
         <div class="form-group">
-            <label>Email</label>
+            <label class="text-success">Email</label>
             <input type="text" name="email" class="form-control" placeholder="Email Address">
         </div>
 
         <div class="form-group">
-            <label>Password</label>
+            <label class="text-success">Password</label>
             <input type="Password" name="password" class="form-control" placeholder="Password">
         </div>
         <div class="form-check">
@@ -35,21 +35,20 @@
             {{else}}
             <input class="form-check-input position-static" type="radio" name="notification" class="checkbox" value="option1" aria-label="..." checked>
             {{/if}}
-            <label>Notification</label>
+            <label class="text-success">Notification</label>
         </div>
         <button type="submit" class="btn btn-outline-success">Update</button>
     </form>
     {{else}}
    <form method="POST" action="/users/update">
     <div class="form-group">
-        <label>Password</label>
+        <label class="text-success">Password</label>
         <input type="Password" name="password" class="form-control" placeholder="Password">
     </div>
     <div class="form-group">
-        <label> Confirm Password</label>
+        <label class="text-success"> Confirm Password</label>
         <input type="Password" name="password2" class="form-control" placeholder="Confirm Password">
     </div>
-    
         <button type="submit" class="btn btn-secondary">Update</button>
     </form>
     {{/if}}

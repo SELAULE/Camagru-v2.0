@@ -58,9 +58,11 @@ body{
 }
 
 #photo_button, #save_photo, #fileToUpload {
-	border: 2px solid black;
+	border: 1px solid green;
 	width: 3em;
-	background-color: rgba(0, 0, 0, 0.5);
+	height: 2.5em;
+
+	/* background-color: rgba(0, 0, 0, 0.5); */
 }
 
 .emo_list, {

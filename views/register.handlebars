@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     </head>
 <body>
-    <h2 class="page- header">Sign up</h2>
+    <h2 class="page- header text-secondary">Sign up</h2>
     {{#if errors}}
         {{#each errors}}
             <div class="alert alert-danger"> {{msg}} </div>
@@ -17,26 +17,26 @@
     {{/if}}
     <form method="POST" action="/users/register">
         <div class="form-group">
-            <label>Name</label>
-            <input type="text" name="name" class="form-control" placeholder="Name">
+            <label class="text-success">Name</label>
+            <input type="text" name="name" class="form-control border border-success" placeholder="Name">
         </div>
         <div class="form-group">
-            <label>Username </label>
-            <input type="text" name="username" class="form-control" placeholder="Username">
-        </div>
-
-        <div class="form-group">
-            <label>Email</label>
-            <input type="text" name="email" class="form-control" placeholder="Email Address">
+            <label class="text-success">Username </label>
+            <input type="text" name="username" class="form-control border border-success" placeholder="Username">
         </div>
 
         <div class="form-group">
-            <label>Password</label>
-            <input type="Password" name="password" class="form-control" placeholder="Password">
+            <label class="text-success">Email</label>
+            <input type="text" name="email" class="form-control border border-success" placeholder="Email Address">
+        </div>
+
+        <div class="form-group">
+            <label class="text-success">Password</label>
+            <input type="Password" name="password" class="form-control border border-success" placeholder="Password">
         </div>
         <div class="form-group">
-            <label>Confirm Password</label>
-            <input type="Password" name="password2" class="form-control" placeholder="Confirm Password">
+            <label class="text-success">Confirm Password</label>
+            <input type="Password" name="password2" class="form-control border border-success" placeholder="Confirm Password">
         </div>
        
         <button type="submit" class="btn btn-secondary">Submit</button>
