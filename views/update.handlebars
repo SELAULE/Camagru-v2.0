@@ -5,6 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/ajax.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
 </head>
 <body>
     {{#if user}}
@@ -24,8 +29,15 @@
             <label>Password</label>
             <input type="Password" name="password" class="form-control" placeholder="Password">
         </div>
-
-        <button type="submit" class="btn btn-secondary">Update</button>
+        <div class="form-check">
+            {{#if name.notify}}
+            <input class="form-check-input position-static" type="radio" name="notification" class="checkbox" value="option1" aria-label="...">
+            {{else}}
+            <input class="form-check-input position-static" type="radio" name="notification" class="checkbox" value="option1" aria-label="..." checked>
+            {{/if}}
+            <label>Notification</label>
+        </div>
+        <button type="submit" class="btn btn-outline-success">Update</button>
     </form>
     {{else}}
    <form method="POST" action="/users/update">
@@ -37,6 +49,7 @@
         <label> Confirm Password</label>
         <input type="Password" name="password2" class="form-control" placeholder="Confirm Password">
     </div>
+    
         <button type="submit" class="btn btn-secondary">Update</button>
     </form>
     {{/if}}

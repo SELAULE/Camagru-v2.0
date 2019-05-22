@@ -14,7 +14,7 @@ const { ensureAuthinticated } = require('../config/auth');
 // Update
 
 router.get('/update', (req, res) => {
-	res.render('update', {title: 'Update'});
+	res.render('update', {title: 'Update', name: req.user});
 });
 
 // Register
@@ -101,11 +101,11 @@ router.post('/register', (req, res) => {
 
 // Updating the user information...
 
-router.post('/update', (req, res, next) => {
+router.post('/update', ensureAuthinticated, (req, res, next) => {
     let {username, email, password} = req.body;
 
     if (username) {
-        User.findOneAndUpdate({_id: req.user.id}, {$set:{username: username}}, {returnOriginal: false, upsert: true}, (err, doc) => {
+        User.findOneAndUpdate({ _id: req.user.id }, {$set:{ username: username }}, { returnOriginal: false, upsert: true }, (err, doc) => {
             if (err) {
                 console.log("Something wrong when updating data!");
             } else {
@@ -118,19 +118,18 @@ router.post('/update', (req, res, next) => {
                     bcrypt.hash(password, salt, (err, hash) => {
                         if (err) console.log(err);
                         newpassword = hash;
-        User.findOneAndUpdate({_id: req.user.id}, {$set:{password: newpassword}}, {returnOriginal: false}, (err, doc) => {
+        User.findOneAndUpdate({ _id: req.user.id }, {$set:{ password: newpassword }}, { returnOriginal: false }, (err, doc) => {
             if (err) {
                 console.log("Something wrong when updating data!");
             } else {
                 console.log(doc);
             }
         });
-        // console.log(newpassword);
     }));
 }
     
     if (email) {
-        User.findOneAndUpdate({_id: req.user.id}, {$set:{email: email}}, {returnOriginal: false}, (err, doc) => {
+        User.findOneAndUpdate({ _id: req.user.id }, { $set:{email: email }}, { returnOriginal: false }, (err, doc) => {
             if (err) {
                 console.log("Something wrong when updating data!");
             } else {
