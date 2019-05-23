@@ -175,7 +175,7 @@ router.post('/cam', upload.single('img64'), (req, res) => {
 
 // Comments
 
-router.post('/comments', (req, res) => {
+router.post('/comments', ensureAuthinticated, (req, res) => {
 	const { comment, image_id } = req.body;
 	let user = req.user
 	uploadComment(user, comment, image_id);
