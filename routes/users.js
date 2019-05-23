@@ -137,6 +137,16 @@ router.post('/update', ensureAuthinticated, (req, res, next) => {
             }
         });
     }
+
+    if (notification) {
+        User.findByIdAndUpdate(req.params.todoId, req.body, {new: true})
+        .then((todo) => {
+            console.log(todo);
+        })
+        .catch( (err) => {
+            console.log(err)
+        });
+    }
     res.render('dashboard');
 })
 
@@ -164,5 +174,16 @@ router.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/users/Login');
 });
+
+
+exports.updateTodo = function (req, res) {
+    User.findByIdAndUpdate(req.params.todoId, req.body, {notify: false})
+        .then(function (todo) {
+            console.log(todo)
+        })
+        .catch(function (err) {
+            console.log(err);
+        });
+}
 
 module.exports = router;

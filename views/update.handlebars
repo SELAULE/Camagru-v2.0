@@ -17,23 +17,23 @@
 
         <div class="form-group">
             <label class="text-success">Username </label>
-            <input type="text" name="username" class="form-control" placeholder="Username">
+            <input type="text" name="username" class="form-control border border-success" placeholder="Username">
         </div>
 
         <div class="form-group">
             <label class="text-success">Email</label>
-            <input type="text" name="email" class="form-control" placeholder="Email Address">
+            <input type="text" name="email" class="form-control border border-success" placeholder="Email Address">
         </div>
 
         <div class="form-group">
             <label class="text-success">Password</label>
-            <input type="Password" name="password" class="form-control" placeholder="Password">
+            <input type="Password" name="password" class="form-control border border-success" placeholder="Password">
         </div>
         <div class="form-check">
             {{#if name.notify}}
-            <input class="form-check-input position-static" type="radio" name="notification" class="checkbox" value="option1" aria-label="...">
+            <input class="form-check-input position-static task" type="radio" name="notification" value="option1" aria-label="...">
             {{else}}
-            <input class="form-check-input position-static" type="radio" name="notification" class="checkbox" value="option1" aria-label="..." checked>
+            <input class="form-check-input position-static task" type="radio" name="notification" value="option1" aria-label="..." checked>
             {{/if}}
             <label class="text-success">Notification</label>
         </div>
@@ -43,14 +43,42 @@
    <form method="POST" action="/users/update">
     <div class="form-group">
         <label class="text-success">Password</label>
-        <input type="Password" name="password" class="form-control" placeholder="Password">
+        <input type="Password" name="password" class="form-control border border-success" placeholder="Password">
     </div>
     <div class="form-group">
         <label class="text-success"> Confirm Password</label>
-        <input type="Password" name="password2" class="form-control" placeholder="Confirm Password">
+        <input type="Password" name="password2" class="form-control border border-success" placeholder="Confirm Password">
     </div>
         <button type="submit" class="btn btn-secondary">Update</button>
     </form>
     {{/if}}
 </body>
+
+<script>
+
+function updateTodo(task) {
+    console.log(task);
+    const updateUrl = "/users/update/" + task.data("length");
+    const isDone = !(task.data("completed"));
+    const updateData = {isCompleted: isDone};
+    $.ajax({
+        method: "PUT",
+        url: updateUrl,
+        data: updateData
+    })
+        .then(function (todo) {
+            console.log(todo);
+            task.toggleClass("done");
+            task.data("completed", isDone);
+            console.log("task Data completed:" + task.data("completed"));
+        })
+        .catch(function (err) {
+            console.log(err);
+        });
+}
+
+$(".form-check").on("click", "input", function () {
+    updateTodo($(this));
+});
+</script>
 </html>
