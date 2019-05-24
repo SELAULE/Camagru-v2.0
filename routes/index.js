@@ -67,13 +67,6 @@ router.get('/', (req, res, next) => {
 	});
 });
 
-// Dashboard Page
-router.get('/dashboard', ensureAuthinticated, (req, res) =>
-	res.render('dashboard', {
-		name: req.user.name
-	})
-);
-
 // Profile Page
 
 router.get('/profile', ensureAuthinticated, (req, res, next) => {

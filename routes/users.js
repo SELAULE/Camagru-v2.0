@@ -4,18 +4,27 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/user').User;
 const tokenModel = require('../models/user').Token;
+const tokenModelPass = require('../models/user').PassToken;
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const keys = require('../config/keys');
 const nodemailer = require('nodemailer');
 const mail = require('../config/auth').mail;
 const confirmEmail = require('../config/auth').confirmEmail;
+const forgotPassMail = require('../config/auth').forgotPassMail;
 const { ensureAuthinticated } = require('../config/auth');
 
 // Update
 
 router.get('/update', (req, res) => {
 	res.render('update', {title: 'Update', name: req.user});
+});
+
+// Forgot Pass Page
+router.get('/forgotPass', (req, res) => {
+    let user = req.body;
+    forgotPassMail(user, tokenModelPass);
+	res.render('forgotPass');
 });
 
 // Register
@@ -165,12 +174,19 @@ router.post('/login', (req, res, next) => {
             errors.push({ msg: 'Please verify your Email' })
         }
     }).catch(err => console.log(err))
-  });
+});
 
+// Verify Email Address
 router.get('/verify/:id', (req, res) => {
     let id = req.params.id;
     confirmEmail(tokenModel, User, id);
     res.redirect('/users/login');
+})
+
+// Forgot Password
+router.post('/forgotPass', (req, res) => {
+    let user = req.body;
+    res.send(req.body);
 })
 
 // User sign out

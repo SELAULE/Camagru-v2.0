@@ -12,6 +12,7 @@ module.exports = {
     }
 }
 
+// For Registration
     async function mail(user, token) {
         let testAccount = await nodemailer.createTestAccount();
 
@@ -37,7 +38,6 @@ module.exports = {
         if (err) { return res.status(500).send({ msg: err.message }); }
     })
     
-    // console.log("Sent to..." + user.email);
     // send mail with defined transport object
     let info = await transporter.sendMail({
         from: '"nselaule 👻" <nselaule@camagru-V2.com>', // sender address
@@ -48,13 +48,55 @@ module.exports = {
     }, (err, info) => {
         if (err) {
             console.log("This is the error... " + err);
-        } else {
+        } else
             console.log("This was a success... " + info);
-        }
+        
     });
-
 }
 
+// For forgot Password
+async function forgotPassMail(user, token) {
+    let testAccount = await nodemailer.createTestAccount();
+
+// create reusable transporter object using the default SMTP transport
+let transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    // service: 'gmail',
+    auth: {
+        user: 'sitholentsako4@gmail.com', // generated ethereal user
+        pass: '19981214' // generated ethereal password
+    }
+});
+
+var token = new Token({
+    userId: user._id,
+    token: crypto.randomBytes(16).toString('hex')
+});
+ 
+// Save the verification token
+token.save().then(token => {
+    console.log(token);
+}).catch(err => console.log(err));
+
+// send mail with defined transport object
+let info = await transporter.sendMail({
+    from: '"nselaule 👻" <nselaule@camagru-V2.com>', // sender address
+    to: user.email, // list of receivers
+    subject: 'Account Verification Token',
+    text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nlocalhost:3000\/\/login\/' + token.token + '.\n' , // Subject line
+    html: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/localhost:3000\/users\/forgotPass\/' + token.token + '.\n' // html body
+}, (err, info) => {
+    if (err) {
+        console.log("This is the error... " + err);
+    } else
+        console.log("This was a success... " + info);
+    
+});
+}
+
+// For Notifications
 async function notificationMail(user, subject, activity) {
     let testAccount = await nodemailer.createTestAccount();
 
@@ -100,10 +142,11 @@ function confirmEmail(tokenModel, User, id) {
                     user.save().then((user) => {
                         console.log( 'This is the user  ' + user);
                     })
-            }).catch(err => console.log(err)) 
+            }).catch(err => console.log(err))
     }).catch(err => console.log(err))
 }
 
 module.exports.mail = mail;
 module.exports.notificationMail = notificationMail;
 module.exports.confirmEmail = confirmEmail;
+module.exports.forgotPassMail = forgotPassMail;

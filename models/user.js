@@ -37,6 +37,7 @@ const UserSchema = mongoose.Schema({
     }
 });
 
+// Token Schema
 const tokenSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -55,31 +56,52 @@ const tokenSchema = new mongoose.Schema({
     }
 });
 
+// Token Schema for Password
+const tokenSchemaPass = new mongoose.Schema({
+    token: {
+        type: String,
+        // required: [true,"there is no token here"]
+    },
+    createdAt: {
+        type: Date,
+        required: true,
+        default: Date.now,
+        expires: 43200
+    }
+});
+
+// Picture Schema
 const picturesSchema = mongoose.Schema({
     userId: String,
     image_path: String,
 });
 
+// Comment Schema
 const commentsSchema = mongoose.Schema({
     image_id: String,
     // username: String,
     comment: String
 });
 
+// Likes Schema
 const likesSchema = mongoose.Schema({
     imageId: String,
     userId: String,
     status: {type: Boolean, default: false}
 })
+
+
 const Comments = mongoose.model('Comments', commentsSchema);
 const Images = mongoose.model('Images', picturesSchema);
 const Token = mongoose.model('Token', tokenSchema);
+const PassToken = mongoose.model('PassToken', tokenSchemaPass);
 const Likes = mongoose.model('Likes', likesSchema);
 const User = mongoose.model('User', UserSchema);
 
 module.exports = {
     User: User,
     Token: Token,
+    PassToken: PassToken,
     Likes: Likes,
     Images: Images,
     Comments: Comments
