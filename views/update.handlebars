@@ -30,11 +30,7 @@
             <input type="Password" name="password" class="form-control border border-success" placeholder="Password">
         </div>
         <div class="form-check">
-            {{#if name.notify}}
             <input class="form-check-input position-static task" type="radio" name="notification" value="option1" aria-label="...">
-            {{else}}
-            <input class="form-check-input position-static task" type="radio" name="notification" value="option1" aria-label="..." checked>
-            {{/if}}
             <label class="text-success">Notification</label>
         </div>
         <button type="submit" class="btn btn-outline-success">Update</button>
@@ -57,12 +53,13 @@
 <script>
 
 function updateTodo(task) {
-    console.log(task);
-    const updateUrl = "/users/update/" + task.data("length");
+    //console.log(task);
+    //console.log(Object.getOwnPropertyNames(task));
+    const updateUrl = "/users/update/" + task.data("id");
     const isDone = !(task.data("completed"));
     const updateData = {isCompleted: isDone};
     $.ajax({
-        method: "PUT",
+        method: "POST",
         url: updateUrl,
         data: updateData
     })
