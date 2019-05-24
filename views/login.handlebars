@@ -5,12 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Sign In</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+      
 
     <style>
         a {
             text-decoration: none;
+        }
+        .takeMeDown{
+            margin-bottom: 2em;
         }
     </style>
     </head>
@@ -27,10 +34,10 @@
             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
             <input type="Password" name="password" class="form-control border border-success" placeholder="Password">
         </div>
-        <button type="submit" class="btn btn-secondary">Submit</button>
+        <button type="submit" class="btn btn-secondary takeMeDown">Submit</button>
     </form>
 
-    <span class="text-success">Forgot Password <a href="/users/forgotPass">Click Here</a></span>
+    <span class="text-success">Forgot Password? <a href="/users/forgotPass">Click Here</a></span>
 </body>
 
 </html>

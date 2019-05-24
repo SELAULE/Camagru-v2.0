@@ -22,8 +22,6 @@ router.get('/update', (req, res) => {
 
 // Forgot Pass Page
 router.get('/forgotPass', (req, res) => {
-    let user = req.body;
-    forgotPassMail(user, tokenModelPass);
 	res.render('forgotPass');
 });
 
@@ -184,8 +182,11 @@ router.get('/verify/:id', (req, res) => {
 })
 
 // Forgot Password
-router.post('/forgotPass', (req, res) => {
+router.post('/forgotPass/:id', (req, res) => {
+    let id = req.params.id;
     let user = req.body;
+    forgotPassMail(user, tokenModelPass);
+    confirmEmail(tokenModelPass, User, id);
     res.send(req.body);
 })
 
