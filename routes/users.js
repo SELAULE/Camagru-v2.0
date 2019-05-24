@@ -8,7 +8,8 @@ const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const keys = require('../config/keys');
 const nodemailer = require('nodemailer');
-const mail = require('../config/auth').mail
+const mail = require('../config/auth').mail;
+const confirmEmail = require('../config/auth').confirmEmail;
 const { ensureAuthinticated } = require('../config/auth');
 
 // Update
@@ -152,21 +153,24 @@ router.post('/update', ensureAuthinticated, (req, res, next) => {
 
 // User Sign In
 router.post('/login', (req, res, next) => {
-    passport.authenticate('local', {
-        successRedirect: '/profile',
-        failureRedirect: '/users/login',
-        failureFlash: true
-    }) (req, res, next);
+    let errors = [];
+    User.findOne({ username: req.body.username }).then((user) => {
+        if (user.active === true) {
+            passport.authenticate('local', {
+            successRedirect: '/',
+            failureRedirect: '/users/login',
+            failureFlash: true
+        }) (req, res, next);
+        } else {
+            errors.push({ msg: 'Please verify your Email' })
+        }
+    }).catch(err => console.log(err))
   });
 
 router.get('/verify/:id', (req, res) => {
-    User.findOneAndUpdate({ email: email }, {$set:{active: true}}, {returnOriginal: false}, (err, doc) => {
-        if (err) {
-            console.log("Something wrong when Verifying!");
-        } else {
-            console.log('Done');
-        }
-    });
+    let id = req.params.id;
+    confirmEmail(tokenModel, User, id);
+    res.redirect('/users/login');
 })
 
 // User sign out

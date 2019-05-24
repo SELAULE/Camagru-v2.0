@@ -44,7 +44,7 @@ module.exports = {
         to: user.email, // list of receivers
         subject: 'Account Verification Token',
         text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nlocalhost:3000\/\/login\/' + token.token + '.\n' , // Subject line
-        html: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/localhost:3000\/verify\/' + token.token + '.\n' // html body
+        html: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/localhost:3000\/users\/verify\/' + token.token + '.\n' // html body
     }, (err, info) => {
         if (err) {
             console.log("This is the error... " + err);
@@ -89,5 +89,21 @@ let info = await transporter.sendMail({
 
 }
 
+function confirmEmail(tokenModel, User, id) {
+    tokenModel.findOne({ token: id }).then ((token) => {
+        // if (err) throw err;
+        console.log(id);
+            console.log( 'This is the token  ' + token);
+            User.findOne({ _id: token.userId }).then ((user) => {
+                // if (err) throw err;
+                    user.active = true;
+                    user.save().then((user) => {
+                        console.log( 'This is the user  ' + user);
+                    })
+            }).catch(err => console.log(err)) 
+    }).catch(err => console.log(err))
+}
+
 module.exports.mail = mail;
 module.exports.notificationMail = notificationMail;
+module.exports.confirmEmail = confirmEmail;
