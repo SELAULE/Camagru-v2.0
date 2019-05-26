@@ -109,8 +109,8 @@ router.post('/register', (req, res) => {
 
 // Updating the user information...
 
-router.post('/update', ensureAuthinticated, (req, res, next) => {
-    let {username, email, password} = req.body;
+router.post('/update/id', ensureAuthinticated, (req, res, next) => {
+    let {username, email, password, notification} = req.body;
 
     if (username) {
         User.findOneAndUpdate({ _id: req.user.id }, {$set:{ username: username }}, { returnOriginal: false, upsert: true }, (err, doc) => {
@@ -147,7 +147,8 @@ router.post('/update', ensureAuthinticated, (req, res, next) => {
     }
 
     if (notification) {
-        User.findByIdAndUpdate(req.params.todoId, req.body, {new: true})
+        console.log(req.params.id);
+        User.findByIdAndUpdate(req.params.todoId, req.body, {new: false})
         .then((todo) => {
             console.log(todo);
         })
@@ -155,6 +156,7 @@ router.post('/update', ensureAuthinticated, (req, res, next) => {
             console.log(err)
         });
     }
+
     res.render('dashboard');
 })
 
@@ -164,7 +166,7 @@ router.post('/login', (req, res, next) => {
     User.findOne({ username: req.body.username }).then((user) => {
         if (user.active === true) {
             passport.authenticate('local', {
-            successRedirect: '/',
+            successRedirect: '/users/update',
             failureRedirect: '/users/login',
             failureFlash: true
         }) (req, res, next);
@@ -197,14 +199,15 @@ router.get('/logout', (req, res) => {
 });
 
 
-exports.updateTodo = function (req, res) {
-    User.findByIdAndUpdate(req.params.todoId, req.body, {notify: false})
-        .then(function (todo) {
-            console.log(todo)
-        })
-        .catch(function (err) {
-            console.log(err);
+router.post('/notification/:notifstat', (req, res) => {
+    console.log(req.params.notifstat);
+        User.findOneAndUpdate({ _id: req.user._id }, {$set:{ notify: req.params.notifstat }}, { returnOriginal: false }, (err, doc) => {
+            if (err) {
+                console.log("Something wrong when updating data!");
+            } else {
+                console.log(doc);
+            }
         });
-}
+})
 
 module.exports = router;

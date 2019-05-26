@@ -71,8 +71,8 @@ router.get('/', (req, res, next) => {
 
 router.get('/profile', ensureAuthinticated, (req, res, next) => {
 	
-	let likes = [];
-	let comments = [];
+	 let likes = [];
+	 let comments = [];
 	imageModel.find({ userId: req.user._id }, (err, image) => {
 		if (err) return next(err);
 		let theepath = [];
@@ -85,18 +85,23 @@ router.get('/profile', ensureAuthinticated, (req, res, next) => {
 					likeModel.find({ imageId: images._id }, (err, data) => {
 						// console.log( 'This is data ' + data);
 						err ? reject(err) : resolve (data);
+						// console.log(data);
+					
 					});
 				});
 			};
+			
 
 			callLikesPromise = async () => {
 				let result = await (likesPromise());
-				console.log(result);
+				// console.log(result);
 				return result;
 			};
+			// console.log(likes);
 
 			callLikesPromise().then((result) => {
-				// console.log( 'This is the returned value ' + result);
+				console.log( 'This is the returned value ' + result);
+				likes.push(result);
 			});
 
 			// Comments section
@@ -105,22 +110,29 @@ router.get('/profile', ensureAuthinticated, (req, res, next) => {
 					commentModel.find({ imageId: images._id }, (err, data) => {
 						// console.log( 'This is data ' + data);
 						err ? reject(err) : resolve (data);
+					
 					});
 				});
 			};
+		//	comments.push(data);
+			
 
 			callcommentsPromise = async () => {
 				let result = await (commentsPromise());
-				console.log(result);
+				// console.log(result);
 				return result;
+
 			};
+			comments.push(callcommentsPromise);
+				// console.log(likes);
 
 			callcommentsPromise().then((result) => {
 				// console.log( 'This is the returned value ' + result);
+				comments.push(result);
 			});
 		});
-		// console.log(likes);
-		// console.log(comments);
+		console.log(likes);
+	//	console.log(comments);
 		res.render('profile', { images: theepath });
 	});
 });

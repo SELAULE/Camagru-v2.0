@@ -10,9 +10,10 @@
     <script type="text/javascript" src="/js/jquery.js"></script>
     <script type="text/javascript" src="/js/ajax.js"></script>
     <script type="text/javascript" src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/notifications.js"></script>
 </head>
 <body>
-    {{#if user}}
+    {{!-- {{#if user}} --}}
    <form method="POST" action="/users/update">
 
         <div class="form-group">
@@ -30,12 +31,12 @@
             <input type="Password" name="password" class="form-control border border-success" placeholder="Password">
         </div>
         <div class="form-check">
-            <input class="form-check-input position-static task" type="radio" name="notification" value="option1" aria-label="...">
+            <input class=" position-static " type="checkbox" name="notification">
             <label class="text-success">Notification</label>
         </div>
         <button type="submit" class="btn btn-outline-success">Update</button>
     </form>
-    {{else}}
+    {{!-- {{else}}
    <form method="POST" action="/users/update">
     <div class="form-group">
         <label class="text-success">Password</label>
@@ -47,35 +48,8 @@
     </div>
         <button type="submit" class="btn btn-secondary">Update</button>
     </form>
-    {{/if}}
+    {{/if}} --}}
 </body>
 
-<script>
 
-function updateTodo(task) {
-    //console.log(task);
-    //console.log(Object.getOwnPropertyNames(task));
-    const updateUrl = "/users/update/" + task.data("id");
-    const isDone = !(task.data("completed"));
-    const updateData = {isCompleted: isDone};
-    $.ajax({
-        method: "POST",
-        url: updateUrl,
-        data: updateData
-    })
-        .then(function (todo) {
-            console.log(todo);
-            task.toggleClass("done");
-            task.data("completed", isDone);
-            console.log("task Data completed:" + task.data("completed"));
-        })
-        .catch(function (err) {
-            console.log(err);
-        });
-}
-
-$(".form-check").on("click", "input", function () {
-    updateTodo($(this));
-});
-</script>
 </html>
