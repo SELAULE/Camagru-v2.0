@@ -166,7 +166,7 @@ router.post('/login', (req, res, next) => {
     User.findOne({ username: req.body.username }).then((user) => {
         if (user.active === true) {
             passport.authenticate('local', {
-            successRedirect: '/users/update',
+            successRedirect: '/',
             failureRedirect: '/users/login',
             failureFlash: true
         }) (req, res, next);

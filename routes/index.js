@@ -63,7 +63,7 @@ router.get('/', (req, res, next) => {
 		image.forEach((images) => {
 			theepath.push(images);
 		});
-		res.render('index', { images: theepath, name: req.user });
+	res.render('index', { images: theepath, name: req.user });
 	});
 });
 
@@ -71,70 +71,29 @@ router.get('/', (req, res, next) => {
 
 router.get('/profile', ensureAuthinticated, (req, res, next) => {
 	
-	 let likes = [];
-	 let comments = [];
-	imageModel.find({ userId: req.user._id }, (err, image) => {
-		if (err) return next(err);
-		let theepath = [];
+	likes = [];
+	comments = [];
+	theepath = [];
+	imageModel.find({ userId: req.user._id }).then((image) => {
 		image.forEach((images) => {
 			theepath.push(images);
+			likeModel.find({ imageId: images._id }).then((like) => {
+				like.forEach((likees) => {
+				likes.push(likees);					
+				})
+			}).catch(err => console.log(err));
 
-			// Likes Promise
-			let likesPromise = () => {
-				return new Promise ((resolve, reject) => {
-					likeModel.find({ imageId: images._id }, (err, data) => {
-						// console.log( 'This is data ' + data);
-						err ? reject(err) : resolve (data);
-						// console.log(data);
-					
-					});
-				});
-			};
-			
-
-			callLikesPromise = async () => {
-				let result = await (likesPromise());
-				// console.log(result);
-				return result;
-			};
-			// console.log(likes);
-
-			callLikesPromise().then((result) => {
-				console.log( 'This is the returned value ' + result);
-				likes.push(result);
-			});
-
-			// Comments section
-			let commentsPromise = () => {
-				return new Promise ((resolve, reject) => {
-					commentModel.find({ imageId: images._id }, (err, data) => {
-						// console.log( 'This is data ' + data);
-						err ? reject(err) : resolve (data);
-					
-					});
-				});
-			};
-		//	comments.push(data);
-			
-
-			callcommentsPromise = async () => {
-				let result = await (commentsPromise());
-				// console.log(result);
-				return result;
-
-			};
-			comments.push(callcommentsPromise);
-				// console.log(likes);
-
-			callcommentsPromise().then((result) => {
-				// console.log( 'This is the returned value ' + result);
-				comments.push(result);
-			});
-		});
-		console.log(likes);
-	//	console.log(comments);
-		res.render('profile', { images: theepath });
+			commentModel.find({ image_id: images._id }).then ((com) => {
+				com.forEach((commees) => {
+					comments.push(commees);					
+					})
+			}).catch(err => console.log(err));
+		console.log('this is the likes' + likes);
+		console.log('this is the comments' + comments);
+		console.log('this is the path' + theepath);
 	});
+	res.render('profile', { images: theepath });
+	}).catch(err => console.log(err))
 });
 
 // Getting the likes
@@ -151,6 +110,7 @@ router.get('/cam', ensureAuthinticated, (req, res) =>
 	})
 );
 
+// The cam
 router.post('/cam', upload.single('img64'), (req, res) => {
 	// console.log(req.body.img64)
 	if (req.body.img64) {
@@ -187,6 +147,7 @@ router.post('/comments', ensureAuthinticated, (req, res) => {
 	res.render('index');
 });
 
+// Likes
 router.post('/likes', ensureAuthinticated, (req, res) => {
 	let id = JSON.stringify(req.body);
 	id = id.replace(/[^\w\s]/gi, '');

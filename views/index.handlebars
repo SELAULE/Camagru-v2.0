@@ -19,28 +19,29 @@
   height: auto;
 }
 
-
+    .images{
+        height: 3em;
+        width: 3em;
+    }
     </style>
 </head>
 <body>
-	<div class="col-md-4">
+	{{!-- <div class="col-md-4"> --}}
         {{#each images}}
     <div class="display_images">
-        <img src="{{this.image_path}}" alt="myImages">
+        <img class="rounded mx-auto d-block" src="{{this.image_path}}" alt="myImages">
         <button class="btn"><span><i class="fas fa-comments"></i></span></button>
         <button class="btn"><span><i class="fas fa-thumbs-up"></i></span></button>
         
     <form action="/comments" method="POST">
         <div class="comments">
-            <input type="text" name="comment">
+            <input class="comment-box" type="text" name="comment">
             <input type="hidden" name="image_id" value="{{this._id}}">
-            <input type="submit" name="submit">
+            <button class="btn btn-primary" type="submit">Post</button>
         </div>
     </form>
-        <!-- <button class="like-btn"><i data-id="{{this._id}}" id="like-btn" class='fa fa-thumbs-up'></i></button> -->
-        <!-- {{!-- <button class="btn-danger" id="delete-btn" data-id="{{this._id}}">X</button> --}} -->
     </div>
 {{/each}}
-    </div>
+    {{!-- </div> --}}
 </body>
 </html>

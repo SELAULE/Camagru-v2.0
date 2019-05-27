@@ -2,11 +2,27 @@
 body {
   /* background-color: rgba(0, 0, 0, 0.7); */
   padding-top: 3.5rem;
-} 
+}
 
-#display_images {
-  display: inline;
-  border-radius: 5%;
-  width: 30vh;
-  height: 31%;
+.comment-box{
+  width: 100%;
+}
+
+.content {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  background-color: #1E5467;
+  color: #fff;
+  border-radius: 10%;
+}
+
+.collapsible {
+  cursor: pointer;
+  padding: 18px;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
 }
