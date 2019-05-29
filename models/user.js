@@ -58,6 +58,9 @@ const tokenSchema = new mongoose.Schema({
 
 // Token Schema for Password
 const tokenSchemaPass = new mongoose.Schema({
+    email: {
+        type: String
+    },
     token: {
         type: String,
         // required: [true,"there is no token here"]

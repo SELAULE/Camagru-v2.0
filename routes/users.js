@@ -11,6 +11,7 @@ const keys = require('../config/keys');
 const nodemailer = require('nodemailer');
 const mail = require('../config/auth').mail;
 const confirmEmail = require('../config/auth').confirmEmail;
+const confirmEmailPass = require('../config/auth').confirmEmailPass;
 const forgotPassMail = require('../config/auth').forgotPassMail;
 const { ensureAuthinticated } = require('../config/auth');
 
@@ -22,7 +23,21 @@ router.get('/update', (req, res) => {
 
 // Forgot Pass Page
 router.get('/forgotPass', (req, res) => {
+    let id = req.params.id;
+    let user = req.body;
+    console.log(req.body);
+    // forgotPassMail(user, tokenModelPass);
+    confirmEmail(tokenModelPass, user, id);
 	res.render('forgotPass');
+});
+
+router.get('/forgotPass/:id', (req, res) => {
+    let id = req.params.id;
+    let password = req.body;
+    console.log( 'This is the params ' + req.params);
+    // forgotPassMail(user, tokenModelPass);
+    confirmEmailPass(tokenModelPass, User, id, password);
+	res.render('update');
 });
 
 // Register
@@ -109,8 +124,8 @@ router.post('/register', (req, res) => {
 
 // Updating the user information...
 
-router.post('/update/id', ensureAuthinticated, (req, res, next) => {
-    let {username, email, password, notification} = req.body;
+router.post('/update', (req, res, next) => {
+    let {username, email, password, forgot_password, forgot_password2} = req.body;
 
     if (username) {
         User.findOneAndUpdate({ _id: req.user.id }, {$set:{ username: username }}, { returnOriginal: false, upsert: true }, (err, doc) => {
@@ -121,6 +136,7 @@ router.post('/update/id', ensureAuthinticated, (req, res, next) => {
             }
         });
     }
+
     if (password) {
         bcrypt.genSalt(10, (err, salt) => 
                     bcrypt.hash(password, salt, (err, hash) => {
@@ -146,18 +162,24 @@ router.post('/update/id', ensureAuthinticated, (req, res, next) => {
         });
     }
 
-    if (notification) {
-        console.log(req.params.id);
-        User.findByIdAndUpdate(req.params.todoId, req.body, {new: false})
-        .then((todo) => {
-            console.log(todo);
-        })
-        .catch( (err) => {
-            console.log(err)
-        });
-    }
-
-    res.render('dashboard');
+    // if (forgot_password && forgot_password2) {
+    //     if (forgot_password === forgot_password2) {
+    //         bcrypt.genSalt(10, (err, salt) => 
+    //         bcrypt.hash(forgot_password, salt, (err, hash) => {
+    //             if (err) console.log(err);
+    //             newpassword = hash;
+    //             User.findOneAndUpdate({ _id: req.user.id }, {$set:{ password: newpassword }}, { returnOriginal: false }, (err, doc) => {
+    //                 if (err) {
+    //                     console.log("Something wrong when updating data!");
+    //                 } else {
+    //                     console.log(doc);
+    //                 }
+    //             });
+    //         }));
+    //     } else {
+    //         console.log('They dont match');
+    //     }
+    // }
 })
 
 // User Sign In
@@ -184,11 +206,12 @@ router.get('/verify/:id', (req, res) => {
 })
 
 // Forgot Password
-router.post('/forgotPass/:id', (req, res) => {
+router.post('/forgotPass', (req, res) => {
     let id = req.params.id;
     let user = req.body;
+    console.log(user);
     forgotPassMail(user, tokenModelPass);
-    confirmEmail(tokenModelPass, User, id);
+    // confirmEmail(tokenModelPass, User, id);
     res.send(req.body);
 })
 

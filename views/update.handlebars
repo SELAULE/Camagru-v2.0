@@ -13,7 +13,7 @@
     <script type="text/javascript" src="/js/notifications.js"></script>
 </head>
 <body>
-    {{!-- {{#if user}} --}}
+    {{#if user}}
    <form method="POST" action="/users/update">
 
         <div class="form-group">
@@ -36,19 +36,19 @@
         </div>
         <button type="submit" class="btn btn-outline-success">Update</button>
     </form>
-    {{!-- {{else}}
+    {{else}}
    <form method="POST" action="/users/update">
     <div class="form-group">
         <label class="text-success">Password</label>
-        <input type="Password" name="password" class="form-control border border-success" placeholder="Password">
+        <input type="Password" name="forgot_password" class="form-control border border-success" placeholder="Password">
     </div>
     <div class="form-group">
         <label class="text-success"> Confirm Password</label>
-        <input type="Password" name="password2" class="form-control border border-success" placeholder="Confirm Password">
+        <input type="Password" name="forgot_password2" class="form-control border border-success" placeholder="Confirm Password">
     </div>
         <button type="submit" class="btn btn-secondary">Update</button>
     </form>
-    {{/if}} --}}
+    {{/if}}
 </body>
 
 

@@ -8,14 +8,18 @@ body {
   width: 100%;
 }
 
+.comments {
+  font-family: 'PT Sans', sans-serif;
+}
+
 .content {
   padding: 0 18px;
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
-  background-color: #1E5467;
-  color: #fff;
-  border-radius: 10%;
+  background-color: #fff;
+  color: #000;
+  border-radius: 5%;
 }
 
 .collapsible {

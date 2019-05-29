@@ -1,6 +1,10 @@
 const nodemailer = require('nodemailer');
 const Token = require('../models/user').Token;
+const User = require('../models/user').User;
+const tokenModelPass = require('../models/user').tokenModelPass;
 const crypto = require('crypto');
+const bcrypt = require('bcryptjs');
+
 
 module.exports = {
     ensureAuthinticated: function(req, res, next) {
@@ -55,7 +59,7 @@ module.exports = {
 }
 
 // For forgot Password
-async function forgotPassMail(user, token) {
+async function forgotPassMail(user, tokenModelPass) {
     let testAccount = await nodemailer.createTestAccount();
 
 // create reusable transporter object using the default SMTP transport
@@ -70,13 +74,13 @@ let transporter = nodemailer.createTransport({
     }
 });
 
-var token = new Token({
-    userId: user._id,
+var tokenModelPass = new tokenModelPass({
+    email: user.email,
     token: crypto.randomBytes(16).toString('hex')
 });
  
 // Save the verification token
-token.save().then(token => {
+tokenModelPass.save().then(token => {
     console.log(token);
 }).catch(err => console.log(err));
 
@@ -85,8 +89,8 @@ let info = await transporter.sendMail({
     from: '"nselaule 👻" <nselaule@camagru-V2.com>', // sender address
     to: user.email, // list of receivers
     subject: 'Account Verification Token',
-    text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nlocalhost:3000\/\/login\/' + token.token + '.\n' , // Subject line
-    html: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/localhost:3000\/users\/forgotPass\/' + token.token + '.\n' // html body
+    text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nlocalhost:3000\/\/login\/' + tokenModelPass.token + '.\n' , // Subject line
+    html: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/localhost:3000\/users\/forgotPass\/' + tokenModelPass.token + '.\n' // html body
 }, (err, info) => {
     if (err) {
         console.log("This is the error... " + err);
@@ -145,22 +149,32 @@ function confirmEmail(tokenModel, User, id) {
             }).catch(err => console.log(err))
     }).catch(err => console.log(err))
 }
-function confirmEmailPass(tokenModel, User, id) {
-    tokenModel.findOne({ token: id }).then ((token) => {
-        // if (err) throw err;
-        console.log(id);
-            console.log( 'This is the token  ' + token);
-            User.findOne({ _id: token.userId }).then ((user) => {
+
+function confirmEmailPass(tokenModelPass, User, id, password) {
+    tokenModelPass.findOne({ token: id }).then ((token) => {
+            User.findOne({ email: token.email }).then ((user) => {
                 // if (err) throw err;
-                    user.active = true;
-                    user.save().then((user) => {
-                        console.log( 'This is the user  ' + user);
-                    })
+                bcrypt.genSalt(10, (err, salt) => 
+                bcrypt.hash(password, salt, (err, hash) => {
+                    if (err) console.log(err);
+                    newpassword = hash;
+                    User.findOneAndUpdate({ email: token.email }, {$set:{ password: newpassword }}, { returnOriginal: false }, (err, doc) => {
+                        if (err) {
+                            console.log("Something wrong when updating data!");
+                        } else {
+                            console.log(doc);
+                        }
+                    });
+                }));
+                user.save().then((user) => {
+                    console.log( 'This is the user  ' + user);
+                })
             }).catch(err => console.log(err))
-    }).catch(err => console.log(err))
+        }).catch(err => console.log(err))
 }
 
 module.exports.mail = mail;
 module.exports.notificationMail = notificationMail;
 module.exports.confirmEmail = confirmEmail;
+module.exports.confirmEmailPass = confirmEmailPass;
 module.exports.forgotPassMail = forgotPassMail;
