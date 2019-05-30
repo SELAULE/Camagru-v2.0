@@ -144,7 +144,7 @@ function confirmEmail(tokenModel, User, id) {
                 // if (err) throw err;
                     user.active = true;
                     user.save().then((user) => {
-                        console.log( 'This is the user  ' + user);
+                        console.log( 'I am coming back  ' + user);
                     })
             }).catch(err => console.log(err))
     }).catch(err => console.log(err))
@@ -153,22 +153,18 @@ function confirmEmail(tokenModel, User, id) {
 function confirmEmailPass(tokenModelPass, User, id, password) {
     tokenModelPass.findOne({ token: id }).then ((token) => {
             User.findOne({ email: token.email }).then ((user) => {
-                // if (err) throw err;
-                bcrypt.genSalt(10, (err, salt) => 
-                bcrypt.hash(password, salt, (err, hash) => {
-                    if (err) console.log(err);
-                    newpassword = hash;
-                    User.findOneAndUpdate({ email: token.email }, {$set:{ password: newpassword }}, { returnOriginal: false }, (err, doc) => {
-                        if (err) {
-                            console.log("Something wrong when updating data!");
-                        } else {
-                            console.log(doc);
-                        }
-                    });
-                }));
-                user.save().then((user) => {
-                    console.log( 'This is the user  ' + user);
-                })
+                if (!password == null) {
+                    bcrypt.genSalt(10, (err, salt) => 
+                    bcrypt.hash(password, salt, (err, hash) => {
+                        if (err) console.log(err);
+                        newpassword = hash;
+                        user.password = newpassword;
+                        
+                        user.save().then((user) => {
+                            console.log( 'I am suppose to be back  ' + user);
+                        }).catch(err => console.log(err))
+                    }));
+                }
             }).catch(err => console.log(err))
         }).catch(err => console.log(err))
 }

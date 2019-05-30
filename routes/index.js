@@ -41,9 +41,11 @@ async function uploadComment(user, comments, image_id) {
 				comment: commentobj
 			});
 			newComment.save().then(info => {
-				let subject = "Someone comment your post";
-				let activity = 'Commented';
-				notifyMail(user, subject, activity);
+				if (req.user.notify === true) {
+					let subject = "Someone comment your post";
+					let activity = 'Commented';
+					notifyMail(user, subject, activity);
+				}
 				console.log('Lets see ' + info);
 			});
 		}

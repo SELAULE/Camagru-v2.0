@@ -34,9 +34,9 @@ router.get('/forgotPass', (req, res) => {
 router.get('/forgotPass/:id', (req, res) => {
     let id = req.params.id;
     let password = req.body;
-    console.log( 'This is the params ' + req.params);
-    // forgotPassMail(user, tokenModelPass);
-    confirmEmailPass(tokenModelPass, User, id, password);
+    if (password) {
+        confirmEmailPass(tokenModelPass, User, id, password);
+    }
 	res.render('update');
 });
 
@@ -212,7 +212,7 @@ router.post('/forgotPass', (req, res) => {
     console.log(user);
     forgotPassMail(user, tokenModelPass);
     // confirmEmail(tokenModelPass, User, id);
-    res.send(req.body);
+    res.send('login');
 })
 
 // User sign out
