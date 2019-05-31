@@ -90,7 +90,7 @@ let info = await transporter.sendMail({
     to: user.email, // list of receivers
     subject: 'Account Verification Token',
     text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nlocalhost:3000\/\/login\/' + tokenModelPass.token + '.\n' , // Subject line
-    html: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/localhost:3000\/users\/forgotPass\/' + tokenModelPass.token + '.\n' // html body
+    html: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/localhost:3000\/users\/updatePass\/' + tokenModelPass.token + '.\n' // html body
 }, (err, info) => {
     if (err) {
         console.log("This is the error... " + err);

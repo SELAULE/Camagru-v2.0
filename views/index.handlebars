@@ -30,7 +30,10 @@
         {{#each images}}
     <div class="display_images">
         <img class="rounded mx-auto d-block" src="{{this.image_path}}" alt="myImages">
-        <button class="btn"><span><i class="fas fa-comments"></i></span></button>
+        <button class="btn collapsible"><span><i class="fas fa-comments"></i></span></button>
+        <div class="content">
+            <p class="comments">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore e t dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
         <button class="btn"><span><i class="fas fa-thumbs-up"></i></span></button>
         
     <form action="/comments" method="POST">
@@ -44,4 +47,21 @@
 {{/each}}
     {{!-- </div> --}}
 </body>
+
+<script>
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.maxHeight){
+        content.style.maxHeight = null;
+      } else {
+        content.style.maxHeight = content.scrollHeight + "px";
+      }
+    });
+  }
+  </script>
 </html>

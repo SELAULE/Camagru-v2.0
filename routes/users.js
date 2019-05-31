@@ -161,25 +161,37 @@ router.post('/update', (req, res, next) => {
             }
         });
     }
+})
 
-    // if (forgot_password && forgot_password2) {
-    //     if (forgot_password === forgot_password2) {
-    //         bcrypt.genSalt(10, (err, salt) => 
-    //         bcrypt.hash(forgot_password, salt, (err, hash) => {
-    //             if (err) console.log(err);
-    //             newpassword = hash;
-    //             User.findOneAndUpdate({ _id: req.user.id }, {$set:{ password: newpassword }}, { returnOriginal: false }, (err, doc) => {
-    //                 if (err) {
-    //                     console.log("Something wrong when updating data!");
-    //                 } else {
-    //                     console.log(doc);
-    //                 }
-    //             });
-    //         }));
-    //     } else {
-    //         console.log('They dont match');
-    //     }
-    // }
+// Forgot Password 
+
+router.get('/updatePass/:id', (req, res) => {
+    res.render('update');
+})
+
+router.post('/updatePass', (req, res) => {
+
+    const { forgot_password, forgot_password2 } = req.body
+
+    if (forgot_password && forgot_password2) {
+        if (forgot_password === forgot_password2) {
+            tokenModelPass.findOne({ token: req.params.id }).then(token => console.log(token))
+            // bcrypt.genSalt(10, (err, salt) => 
+            // bcrypt.hash(forgot_password, salt, (err, hash) => {
+            //     if (err) console.log(err);
+            //     newpassword = hash;
+            //     User.findOneAndUpdate({ _id: req.user.id }, {$set:{ password: newpassword }}, { returnOriginal: false }, (err, doc) => {
+            //         if (err) {
+            //             console.log("Something wrong when updating data!");
+            //         } else {
+            //             console.log(doc);
+            //         }
+            //     });
+            // }));
+        } else {
+            console.log('They dont match');
+        }
+    }
 })
 
 // User Sign In
@@ -212,7 +224,7 @@ router.post('/forgotPass', (req, res) => {
     console.log(user);
     forgotPassMail(user, tokenModelPass);
     // confirmEmail(tokenModelPass, User, id);
-    res.send('login');
+    res.render('login');
 })
 
 // User sign out
